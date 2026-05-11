@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python読解ガイド - 1. 変数（variable）</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #1e1e2e; --bg-raised: #262638; --code-bg: #2d2d3f;
+  --accent: #7c3aed; --accent-dim: rgba(124,58,237,0.25);
+  --fg: #e4e4f0; --fg-dim: #9494ac; --fg-bright: #fff;
+  --border: #3a3a52; --warning: #fbbf24; --success: #34d399;
+  --radius: 10px;
+  --font-ui: "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic UI", sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", "Cascadia Code", "Consolas", monospace;
+  --transition: 0.25s ease;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-ui); background: var(--bg); color: var(--fg);
+  line-height: 1.8; min-height: 100vh; -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ''; position: fixed; top: -30%; left: -20%; width: 70vw; height: 70vw;
+  background: radial-gradient(circle, rgba(124,58,237,0.07) 0%, transparent 65%);
+  pointer-events: none;
+}
+.container { max-width: 780px; margin: 0 auto; padding: 24px 20px 60px; position: relative; z-index: 1; }
+header { margin-bottom: 32px; }
+.header-top { display: flex; justify-content: space-between; margin-bottom: 12px; }
+.header-label { font-size: 13px; color: var(--fg-dim); }
+.header-step { font-size: 13px; color: var(--accent); font-weight: 600; }
+.progress-track { width: 100%; height: 4px; background: var(--border); border-radius: 4px; }
+.progress-fill { height: 100%; width: 5%; background: linear-gradient(90deg, var(--accent), #a78bfa); border-radius: 4px; transition: width 0.6s ease; }
+h1 { font-size: 28px; font-weight: 800; color: var(--fg-bright); margin-top: 16px; }
+h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 8px; }
+.concept-card {
+  background: var(--bg-raised); border: 1px solid var(--border); border-left: 4px solid var(--accent);
+  border-radius: var(--radius); padding: 20px 24px; margin-bottom: 36px;
+}
+.concept-label { font-size: 12px; font-weight: 700; color: var(--accent); margin-bottom: 8px; letter-spacing: 0.06em; }
+.concept-card p { font-size: 15px; line-height: 1.9; }
+.section-title {
+  font-size: 18px; font-weight: 700; color: var(--fg-bright); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-title .icon {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; background: var(--accent-dim); color: var(--accent);
+  border-radius: 6px; font-size: 14px;
+}
+.code-panel { background: var(--code-bg); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.code-toolbar {
+  display: flex; justify-content: space-between; padding: 10px 16px;
+  background: rgba(0,0,0,0.15); border-bottom: 1px solid var(--border);
+}
+.lang-badge { font-family: var(--font-mono); font-size: 12px; color: var(--fg-dim); background: rgba(255,255,255,0.06); padding: 2px 10px; border-radius: 4px; }
+.file-name { font-family: var(--font-mono); font-size: 12px; color: var(--fg-dim); }
+.code-line { display: flex; min-height: 38px; transition: background var(--transition); position: relative; }
+.code-line.active { background: rgba(124,58,237,0.12); }
+.code-line.active::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: #a78bfa; border-radius: 0 3px 3px 0;
+}
+.line-num {
+  width: 48px; text-align: right; padding-right: 16px; font-family: var(--font-mono);
+  font-size: 13px; color: var(--fg-dim); display: flex; align-items: center; justify-content: flex-end;
+  flex-shrink: 0; opacity: 0.5; user-select: none;
+}
+.code-line.active .line-num { color: #a78bfa; opacity: 1; }
+.line-content { font-family: var(--font-mono); font-size: 14px; display: flex; align-items: center; padding-right: 20px; white-space: pre; }
+.syn-var { color: #7dd3fc; } .syn-op { color: #f9a8d4; } .syn-num { color: #fbbf24; } .syn-str { color: #86efac; }
+.exec-indicator {
+  display: flex; align-items: center; gap: 8px; padding: 12px 16px;
+  background: rgba(0,0,0,0.12); border-top: 1px solid var(--border);
+  font-family: var(--font-mono); font-size: 13px; color: var(--fg-dim); min-height: 44px;
+}
+.exec-indicator .arrow { color: var(--accent); font-weight: 700; }
+.btn {
+  display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px;
+  border: none; border-radius: 6px; font-family: var(--font-ui); font-size: 14px;
+  font-weight: 600; cursor: pointer; transition: all var(--transition);
+}
+.btn:focus-visible { box-shadow: 0 0 0 3px var(--accent-dim); outline: none; }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover:not(:disabled) { background: #6d28d9; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(124,58,237,0.35); }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-ghost { background: rgba(255,255,255,0.06); color: var(--fg-dim); border: 1px solid var(--border); }
+.btn-ghost:hover { background: rgba(255,255,255,0.1); color: var(--fg); }
+.stepper-controls { display: flex; gap: 10px; margin-top: 14px; }
+.watch-section { margin-top: 16px; }
+.watch-label { font-size: 12px; font-weight: 700; color: var(--fg-dim); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; letter-spacing: 0.06em; }
+.watch-label .dot { width: 7px; height: 7px; background: var(--success); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+.watch-panel { background: #181825; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; font-family: var(--font-mono); font-size: 13px; min-height: 42px; }
+.watch-empty { padding: 12px 16px; color: var(--fg-dim); font-style: italic; font-size: 12px; text-align: center; }
+.watch-row { display: flex; align-items: center; padding: 10px 16px; border-bottom: 1px solid rgba(255,255,255,0.04); animation: fadeIn 0.35s ease-out; }
+.watch-row:last-child { border-bottom: none; }
+@keyframes fadeIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+.watch-name { color: #7dd3fc; min-width: 90px; }
+.watch-eq { color: var(--fg-dim); margin: 0 10px; }
+.watch-value { color: #fbbf24; }
+.watch-type { margin-left: auto; font-size: 11px; color: var(--fg-dim); background: rgba(255,255,255,0.05); padding: 1px 8px; border-radius: 3px; }
+.guide-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 36px; }
+.guide-table thead { background: rgba(0,0,0,0.25); }
+.guide-table th { padding: 12px 16px; font-size: 13px; font-weight: 700; color: var(--fg-dim); text-align: left; border-bottom: 1px solid var(--border); }
+.guide-table td { padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 14px; }
+.guide-table tr:last-child td { border-bottom: none; }
+.guide-table tbody tr:hover { background: rgba(255,255,255,0.03); }
+.guide-table code { font-family: var(--font-mono); font-size: 13px; background: var(--code-bg); padding: 3px 8px; border-radius: 4px; }
+.key-point {
+  background: linear-gradient(135deg, rgba(251,191,36,0.1) 0%, rgba(251,191,36,0.03) 100%);
+  border: 1px solid rgba(251,191,36,0.25); border-left: 4px solid var(--warning);
+  border-radius: var(--radius); padding: 18px 22px; margin-bottom: 40px;
+}
+.key-point .kp-label { font-size: 12px; font-weight: 700; color: var(--warning); margin-bottom: 4px; letter-spacing: 0.06em; }
+.key-point p { font-size: 15px; line-height: 1.8; }
+.key-point code { font-family: var(--font-mono); font-size: 13px; background: rgba(0,0,0,0.25); padding: 2px 7px; border-radius: 4px; color: #fbbf24; }
+.quiz-section { margin-bottom: 40px; }
+.quiz-card { background: var(--bg-raised); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 16px; transition: border-color var(--transition); }
+.quiz-card:hover { border-color: rgba(124,58,237,0.4); }
+.quiz-header { display: flex; align-items: center; gap: 10px; padding: 16px 20px 12px; }
+.quiz-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: var(--accent); color: #fff; font-size: 13px; font-weight: 700; border-radius: 50%; }
+.quiz-title { font-size: 15px; font-weight: 600; color: var(--fg-bright); }
+.quiz-code { margin: 0 20px; background: var(--code-bg); border-radius: 6px; padding: 14px 18px; font-family: var(--font-mono); font-size: 13px; line-height: 1.8; overflow-x: auto; }
+.quiz-actions { padding: 14px 20px 16px; }
+.btn-reveal {
+  display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px;
+  border: 1px dashed var(--border); border-radius: 6px; background: transparent;
+  color: var(--fg-dim); font-family: var(--font-ui); font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: all var(--transition);
+}
+.btn-reveal:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+.quiz-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, opacity 0.3s ease; opacity: 0; padding: 0 20px; }
+.quiz-answer.open { max-height: 200px; opacity: 1; padding: 0 20px 16px; }
+.quiz-answer-inner { background: rgba(124,58,237,0.08); border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0; padding: 12px 16px; font-size: 14px; line-height: 1.8; }
+.nav-footer { display: flex; justify-content: space-between; padding-top: 32px; border-top: 1px solid var(--border); }
+.nav-link { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 6px; font-size: 14px; font-weight: 600; text-decoration: none; transition: all var(--transition); }
+.nav-prev { background: rgba(255,255,255,0.04); color: var(--fg-dim); border: 1px solid var(--border); pointer-events: none; opacity: 0.4; }
+.nav-next { background: var(--accent); color: #fff; border: 1px solid var(--accent); margin-left: auto; }
+.nav-next:hover { background: #6d28d9; transform: translateY(-1px); }
+.step-dots { display: flex; gap: 6px; margin-top: 10px; justify-content: center; }
+.step-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: all var(--transition); }
+.step-dot.active { background: #a78bfa; box-shadow: 0 0 8px rgba(167,139,250,0.5); }
+.step-dot.done { background: var(--accent); }
+@media (max-width: 600px) {
+  .container { padding: 16px 14px 48px; }
+  h1 { font-size: 22px; } h1 span { font-size: 15px; }
+  .line-content { font-size: 12px; } .line-num { width: 36px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="header-top">
+      <span class="header-label">Python 読解ガイド</span>
+      <span class="header-step">1 / 20</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill"></div></div>
+    <h1>1. 変数<span>(variable)</span></h1>
+  </header>
+
+  <div class="concept-card">
+    <div class="concept-label">CONCEPT</div>
+    <p>変数は「データを入れる箱」です。箱に名前を付けて、あとでその名前で中身を取り出せます。</p>
+  </div>
+
+  <section style="margin-bottom:40px;">
+    <div class="section-title"><span class="icon">&#9654;</span> コードを1行ずつ実行してみよう</div>
+    <div class="code-panel">
+      <div class="code-toolbar"><span class="file-name">example.py</span><span class="lang-badge">Python</span></div>
+      <div class="code-body" id="codeBody">
+        <div class="code-line" data-line="0"><span class="line-num">1</span><span class="line-content"><span class="syn-var">price</span> <span class="syn-op">=</span> <span class="syn-num">1980</span></span></div>
+        <div class="code-line" data-line="1"><span class="line-num">2</span><span class="line-content"><span class="syn-var">tax_rate</span> <span class="syn-op">=</span> <span class="syn-num">0.10</span></span></div>
+        <div class="code-line" data-line="2"><span class="line-num">3</span><span class="line-content"><span class="syn-var">total</span> <span class="syn-op">=</span> <span class="syn-var">price</span> <span class="syn-op">*</span> (<span class="syn-num">1</span> <span class="syn-op">+</span> <span class="syn-var">tax_rate</span>)</span></div>
+      </div>
+      <div class="exec-indicator" id="execIndicator"><span class="arrow">&rarr;</span> <span class="desc">&laquo; 次の行 &raquo; ボタンを押して実行を開始</span></div>
+    </div>
+    <div class="stepper-controls">
+      <button class="btn btn-primary" id="btnStep">次の行 &rarr;</button>
+      <button class="btn btn-ghost" id="btnReset">リセット</button>
+    </div>
+    <div class="step-dots" id="stepDots"><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div></div>
+    <div class="watch-section">
+      <div class="watch-label"><span class="dot"></span> VARIABLES</div>
+      <div class="watch-panel" id="watchPanel"><div class="watch-empty">実行すると変数の状態が表示されます</div></div>
+    </div>
+  </section>
+
+  <div class="section-title"><span class="icon">&#128218;</span> 読み方ガイド</div>
+  <table class="guide-table">
+    <thead><tr><th>コード</th><th>読み方</th></tr></thead>
+    <tbody>
+      <tr><td><code>shop_name = "NexusCore"</code></td><td>shop_name という箱に "NexusCore" という文字を入れる</td></tr>
+      <tr><td><code>visitor_count = 150</code></td><td>visitor_count という箱に 150 という数字を入れる</td></tr>
+      <tr><td><code>total = price * (1 + tax_rate)</code></td><td>price x (1 + tax_rate) を計算して total に入れる</td></tr>
+    </tbody>
+  </table>
+
+  <div class="key-point">
+    <div class="kp-label">KEY POINT</div>
+    <p><code>=</code> は「等しい」ではなく「右辺を左の箱に入れる」と読む。箱の名前（変数名）は英語で付けるのがルール。文字は <code>"</code> で囲む、数字は囲まない。</p>
+  </div>
+
+  <div class="section-title"><span class="icon">&#10067;</span> 確認問題</div>
+  <div class="quiz-section">
+    <div class="quiz-card" data-quiz="1">
+      <div class="quiz-header"><span class="quiz-num">1</span><span class="quiz-title">このコードは何をしていますか？</span></div>
+      <div class="quiz-code">user_name = "田中さん"\ngreeting = "こんにちは、" + user_name</div>
+      <div class="quiz-actions"><button class="btn-reveal" data-target="1">解答を見る</button></div>
+      <div class="quiz-answer" data-answer="1"><div class="quiz-answer-inner">user_name に "田中さん" を入れ、それを "こんにちは、" と繋いで greeting に入れます。結果: greeting = "こんにちは、田中さん"</div></div>
+    </div>
+    <div class="quiz-card" data-quiz="2">
+      <div class="quiz-header"><span class="quiz-num">2</span><span class="quiz-title">total はいくつになりますか？</span></div>
+      <div class="quiz-code">a = 100\nb = 200\ntotal = a + b</div>
+      <div class="quiz-actions"><button class="btn-reveal" data-target="2">解答を見る</button></div>
+      <div class="quiz-answer" data-answer="2"><div class="quiz-answer-inner">total は 300 です。a(100) + b(200) = 300</div></div>
+    </div>
+    <div class="quiz-card" data-quiz="3">
+      <div class="quiz-header"><span class="quiz-num">3</span><span class="quiz-title">x に入っている値は何ですか？</span></div>
+      <div class="quiz-code">x = 10\nx = x + 5\nx = x * 2</div>
+      <div class="quiz-actions"><button class="btn-reveal" data-target="3">解答を見る</button></div>
+      <div class="quiz-answer" data-answer="3"><div class="quiz-answer-inner">x は 30 です。10 -&gt; 15 (10+5) -&gt; 30 (15x2)。変数は上書きされます。</div></div>
+    </div>
+  </div>
+
+  <div class="nav-footer">
+    <a class="nav-link nav-prev">&larr; 前</a>
+    <a class="nav-link nav-next" href="02_functions.html">次: 関数 &rarr;</a>
+  </div>
+</div>
+
+<script>
+// Code stepper data
+var steps = [
+  { vars: [{name:'price', value:'1980', type:'int'}], desc:'price という箱に 1980 を入れる' },
+  { vars: [{name:'price', value:'1980', type:'int'},{name:'tax_rate', value:'0.10', type:'float'}], desc:'tax_rate という箱に 0.10 を入れる' },
+  { vars: [{name:'price', value:'1980', type:'int'},{name:'tax_rate', value:'0.10', type:'float'},{name:'total', value:'2178.0', type:'float'}], desc:'price x (1 + tax_rate) = 2178.0 を total に入れる' }
+];
+var currentStep = -1;
+
+function updateDisplay() {
+  var codeLines = document.querySelectorAll('#codeBody .code-line');
+  var dots = document.querySelectorAll('#stepDots .step-dot');
+  var indicator = document.getElementById('execIndicator');
+  var watchPanel = document.getElementById('watchPanel');
+  var btnStep = document.getElementById('btnStep');
+
+  for (var i = 0; i < codeLines.length; i++) {
+    if (i === currentStep) codeLines[i].classList.add('active');
+    else codeLines[i].classList.remove('active');
+  }
+
+  for (var d = 0; d < dots.length; d++) {
+    dots[d].className = 'step-dot';
+    if (d < currentStep) dots[d].classList.add('done');
+    else if (d === currentStep) dots[d].classList.add('active');
+  }
+
+  // Update indicator text using textContent (safe, no innerHTML)
+  var arrowSpan = indicator.querySelector('.arrow');
+  var descSpan = indicator.querySelector('.desc');
+  if (!arrowSpan || !descSpan) return;
+
+  if (currentStep === -1) {
+    arrowSpan.textContent = '→';
+    descSpan.textContent = '« 次の行 » ボタンを押して実行を開始';
+    btnStep.disabled = false;
+  } else {
+    arrowSpan.textContent = '→';
+    descSpan.textContent = steps[currentStep].desc;
+    btnStep.disabled = currentStep >= steps.length - 1;
+  }
+
+  // Update watch panel using DOM methods (safe, no innerHTML)
+  while (watchPanel.firstChild) watchPanel.removeChild(watchPanel.firstChild);
+
+  if (currentStep === -1) {
+    var empty = document.createElement('div');
+    empty.className = 'watch-empty';
+    empty.textContent = '実行すると変数の状態が表示されます';
+    watchPanel.appendChild(empty);
+  } else {
+    var vars = steps[currentStep].vars;
+    for (var v = 0; v < vars.length; v++) {
+      var row = document.createElement('div');
+      row.className = 'watch-row';
+      var nameEl = document.createElement('span');
+      nameEl.className = 'watch-name';
+      nameEl.textContent = vars[v].name;
+      var eqEl = document.createElement('span');
+      eqEl.className = 'watch-eq';
+      eqEl.textContent = '=';
+      var valEl = document.createElement('span');
+      valEl.className = 'watch-value';
+      valEl.textContent = vars[v].value;
+      var typeEl = document.createElement('span');
+      typeEl.className = 'watch-type';
+      typeEl.textContent = vars[v].type;
+      row.appendChild(nameEl);
+      row.appendChild(eqEl);
+      row.appendChild(valEl);
+      row.appendChild(typeEl);
+      watchPanel.appendChild(row);
+    }
+  }
+}
+
+document.getElementById('btnStep').addEventListener('click', function() {
+  if (currentStep >= steps.length - 1) return;
+  currentStep++;
+  updateDisplay();
+});
+
+document.getElementById('btnReset').addEventListener('click', function() {
+  currentStep = -1;
+  updateDisplay();
+});
+
+// Quiz toggle (safe, no innerHTML)
+var revealButtons = document.querySelectorAll('.btn-reveal');
+for (var b = 0; b < revealButtons.length; b++) {
+  revealButtons[b].addEventListener('click', function() {
+    var targetId = this.getAttribute('data-target');
+    var answer = document.querySelector('.quiz-answer[data-answer="' + targetId + '"]');
+    if (!answer) return;
+    var isOpen = answer.classList.contains('open');
+    answer.classList.toggle('open');
+    this.textContent = isOpen ? '解答を見る' : '解答を隠す';
+  });
+}
+</script>
+</body>
+</html>
