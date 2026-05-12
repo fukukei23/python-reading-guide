@@ -145,10 +145,16 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 .step-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: all var(--transition); }
 .step-dot.active { background: #a78bfa; box-shadow: 0 0 8px rgba(167,139,250,0.5); }
 .step-dot.done { background: var(--accent); }
+.term { border-bottom: 1px dashed var(--accent); cursor: help; position: relative; color: #c4b5fd; }
+.term:hover { color: var(--fg-bright); }
+.term-popup { display: none; position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); background: #1a1a2e; border: 1px solid var(--accent); border-radius: 8px; padding: 10px 14px; font-size: 13px; line-height: 1.6; color: var(--fg); white-space: nowrap; z-index: 100; box-shadow: 0 4px 16px rgba(0,0,0,0.4); pointer-events: none; }
+.term-popup::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: var(--accent); }
+.term:hover .term-popup, .term.active .term-popup { display: block; }
 @media (max-width: 600px) {
   .container { padding: 16px 14px 48px; }
   h1 { font-size: 22px; } h1 span { font-size: 15px; }
   .line-content { font-size: 12px; } .line-num { width: 36px; }
+  .term-popup { white-space: normal; min-width: 180px; left: 0; transform: none; }
 }
 </style>
 </head>
@@ -157,7 +163,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <header>
     <div class="header-top">
-      <span class="header-label">Python 読解ガイド</span>
+      <a href="../../index.html" style="font-size:13px;color:var(--fg-dim);text-decoration:none;display:flex;align-items:center;gap:4px;"><span class="header-label">Python 読解ガイド</span>larr; トップへ</a>
       <span class="header-step">17 / 20</span>
     </div>
     <div class="progress-track"><div class="progress-fill"></div></div>
@@ -341,6 +347,36 @@ for (var b = 0; b < revealButtons.length; b++) {
     this.textContent = isOpen ? '解答を見る' : '解答を隠す';
   });
 }
+
+// Term tooltip toggle for mobile
+var terms = document.querySelectorAll('.term');
+for (var t = 0; t < terms.length; t++) {
+  terms[t].addEventListener('click', function(e) {
+    e.stopPropagation();
+    var wasActive = this.classList.contains('active');
+    var allTerms = document.querySelectorAll('.term.active');
+    for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
+    if (!wasActive) this.classList.add('active');
+  });
+}
+document.addEventListener('click', function() {
+  var allTerms = document.querySelectorAll('.term.active');
+  for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
+});
+var terms = document.querySelectorAll('.term');
+for (var t = 0; t < terms.length; t++) {
+  terms[t].addEventListener('click', function(e) {
+    e.stopPropagation();
+    var wasActive = this.classList.contains('active');
+    var allTerms = document.querySelectorAll('.term.active');
+    for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
+    if (!wasActive) this.classList.add('active');
+  });
+}
+document.addEventListener('click', function() {
+  var allTerms = document.querySelectorAll('.term.active');
+  for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
+});
 </script>
 </body>
 </html>

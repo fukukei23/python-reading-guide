@@ -145,10 +145,47 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 .step-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: all var(--transition); }
 .step-dot.active { background: #a78bfa; box-shadow: 0 0 8px rgba(167,139,250,0.5); }
 .step-dot.done { background: var(--accent); }
+.term {
+  border-bottom: 1px dashed var(--accent);
+  cursor: help;
+  position: relative;
+  color: #c4b5fd;
+}
+.term:hover { color: var(--fg-bright); }
+.term-popup {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a1a2e;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--fg);
+  white-space: nowrap;
+  z-index: 100;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  pointer-events: none;
+}
+.term-popup::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--accent);
+}
+.term:hover .term-popup,
+.term.active .term-popup { display: block; }
 @media (max-width: 600px) {
   .container { padding: 16px 14px 48px; }
   h1 { font-size: 22px; } h1 span { font-size: 15px; }
   .line-content { font-size: 12px; } .line-num { width: 36px; }
+  .term-popup { white-space: normal; min-width: 180px; left: 0; transform: none; }
 }
 </style>
 </head>
@@ -157,7 +194,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <header>
     <div class="header-top">
-      <span class="header-label">Python 読解ガイド</span>
+      <a href="../../index.html" style="font-size:13px;color:var(--fg-dim);text-decoration:none;display:flex;align-items:center;gap:4px;"><span class="header-label">Python 読解ガイド</span>larr; トップへ</a>
       <span class="header-step">5 / 20</span>
     </div>
     <div class="progress-track"><div class="progress-fill"></div></div>
@@ -166,7 +203,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <div class="concept-card">
     <div class="concept-label">CONCEPT</div>
-    <p>同じ作業を何度も繰り返す仕組みです。買い物リストの品目を1つずつ確認するようなもの。</p>
+    <p>同じ作業を何度も<span class="term">繰り返し<span class="term-popup">ループ — 同じ処理を何度も実行する</span></span>す仕組みです。買い物リストの品目を1つずつ確認するようなもの。</p>
   </div>
 
   <section style="margin-bottom:40px;">
@@ -196,8 +233,8 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
   <table class="guide-table">
     <thead><tr><th>コード</th><th>読み方</th></tr></thead>
     <tbody>
-      <tr><td><code>for fruit in fruits:</code></td><td>fruits の中身を1つずつ fruit に入れて繰り返す</td></tr>
-      <tr><td><code>print(fruit)</code></td><td>（繰り返しの中で）fruit を表示する</td></tr>
+      <tr><td><code>for fruit in fruits:</code></td><td><span class="term">fruits<span class="term-popup">フルーツ — 果物（複数形）</span></span> の中身を1つずつ <span class="term">fruit<span class="term-popup">フルート — 果物</span></span> に入れて繰り返す</td></tr>
+      <tr><td><code>print(fruit)</code></td><td>（<span class="term">繰り返し<span class="term-popup">ループ — 同じ処理を何度も実行する</span></span>の中で）fruit を表示する</td></tr>
       <tr><td><code>for i in range(3):</code></td><td>i を 0, 1, 2 と変えながら3回繰り返す</td></tr>
       <tr><td><code>range(3)</code></td><td>0から始まって3つ分の数字（0, 1, 2）を作る</td></tr>
     </tbody>
@@ -205,7 +242,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <div class="key-point">
     <div class="kp-label">KEY POINT</div>
-    <p><code>for 変数 in リスト:</code> の形が基本。インデントされた部分が繰り返される。リストの中身が尽きたら繰り返し終了。</p>
+    <p><code>for 変数 in <span class="term">リスト<span class="term-popup">リスト — 順序付きコレクション</span></span>:</code> の形が基本。インデントされた部分が<span class="term">繰り返し<span class="term-popup">ループ — 同じ処理を何度も実行する</span></span>される。リストの中身が尽きたら繰り返し終了。</p>
   </div>
 
   <div class="section-title"><span class="icon">&#10067;</span> 確認問題</div>
@@ -214,7 +251,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
       <div class="quiz-header"><span class="quiz-num">1</span><span class="quiz-title">このコードは何を表示しますか？</span></div>
       <div class="quiz-code">names = ["犬", "猫", "鳥"]\nfor name in names:\n    print("これは" + name + "です")</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="1">解答を見る</button></div>
-      <div class="quiz-answer" data-answer="1"><div class="quiz-answer-inner">「これは犬です」「これは猫です」「これは鳥です」の3行が順に表示されます。リストの要素を1つずつ取り出して処理します。</div></div>
+      <div class="quiz-answer" data-answer="1"><div class="quiz-answer-inner">「これは犬です」「これは猫です」「これは鳥です」の3行が順に表示されます。<span class="term">リスト<span class="term-popup">リスト — 順序付きコレクション</span></span>の要素を1つずつ取り出して処理します。</div></div>
     </div>
     <div class="quiz-card" data-quiz="2">
       <div class="quiz-header"><span class="quiz-num">2</span><span class="quiz-title">このコードは何を表示しますか？</span></div>
@@ -333,6 +370,22 @@ for (var b = 0; b < revealButtons.length; b++) {
     this.textContent = isOpen ? '解答を見る' : '解答を隠す';
   });
 }
+
+// Term tooltip toggle for mobile
+var terms = document.querySelectorAll('.term');
+for (var t = 0; t < terms.length; t++) {
+  terms[t].addEventListener('click', function(e) {
+    e.stopPropagation();
+    var wasActive = this.classList.contains('active');
+    var allTerms = document.querySelectorAll('.term.active');
+    for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
+    if (!wasActive) this.classList.add('active');
+  });
+}
+document.addEventListener('click', function() {
+  var allTerms = document.querySelectorAll('.term.active');
+  for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
+});
 </script>
 </body>
 </html>

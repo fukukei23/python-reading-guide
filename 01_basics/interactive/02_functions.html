@@ -145,10 +145,47 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 .step-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: all var(--transition); }
 .step-dot.active { background: #a78bfa; box-shadow: 0 0 8px rgba(167,139,250,0.5); }
 .step-dot.done { background: var(--accent); }
+.term {
+  border-bottom: 1px dashed var(--accent);
+  cursor: help;
+  position: relative;
+  color: #c4b5fd;
+}
+.term:hover { color: var(--fg-bright); }
+.term-popup {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a1a2e;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--fg);
+  white-space: nowrap;
+  z-index: 100;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  pointer-events: none;
+}
+.term-popup::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--accent);
+}
+.term:hover .term-popup,
+.term.active .term-popup { display: block; }
 @media (max-width: 600px) {
   .container { padding: 16px 14px 48px; }
   h1 { font-size: 22px; } h1 span { font-size: 15px; }
   .line-content { font-size: 12px; } .line-num { width: 36px; }
+  .term-popup { white-space: normal; min-width: 180px; left: 0; transform: none; }
 }
 </style>
 </head>
@@ -157,7 +194,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <header>
     <div class="header-top">
-      <span class="header-label">Python 読解ガイド</span>
+      <a href="../../index.html" style="font-size:13px;color:var(--fg-dim);text-decoration:none;display:flex;align-items:center;gap:4px;"><span class="header-label">Python 読解ガイド</span>larr; トップへ</a>
       <span class="header-step">2 / 20</span>
     </div>
     <div class="progress-track"><div class="progress-fill"></div></div>
@@ -166,7 +203,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <div class="concept-card">
     <div class="concept-label">CONCEPT</div>
-    <p>関数は「ひとまとまりの作業をレシピにする」仕組みです。レシピの名前を呼ぶだけで、中身の作業が実行されます。</p>
+    <p><span class="term">関数<span class="term-popup">ファンクション — 処理をまとめたブロック</span></span>は「ひとまとまりの作業をレシピにする」仕組みです。レシピの名前を呼ぶだけで、中身の作業が実行されます。</p>
   </div>
 
   <section style="margin-bottom:40px;">
@@ -199,13 +236,13 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
       <tr><td><code>def say_hello():</code></td><td>say_hello という名前のレシピを定義する</td></tr>
       <tr><td><code>print("こんにちは！")</code></td><td>（インデントされた行は）レシピの中身</td></tr>
       <tr><td><code>say_hello()</code></td><td>say_hello のレシピを実行する</td></tr>
-      <tr><td><code>return price + tax</code></td><td>計算結果を「呼び出し元」に返す</td></tr>
+      <tr><td><code>return price + tax</code></td><td>計算結果を「呼び出し元」に<span class="term">返す<span class="term-popup">リターン・バリュー — 関数からの出力結果</span></span></td></tr>
     </tbody>
   </table>
 
   <div class="key-point">
     <div class="kp-label">KEY POINT</div>
-    <p><code>def</code> = define（定義する）の略。関数名のあとに <code>()</code> を付けて呼び出す。<code>return</code> で結果を返す（return がなければ何も返さない）。</p>
+    <p><code>def</code> = define（定義する）の略。<span class="term">関数<span class="term-popup">ファンクション — 処理をまとめたブロック</span></span>名のあとに <code>()</code> を付けて呼び出す。<code>return</code> で<span class="term">戻り値<span class="term-popup">リターン・バリュー — 関数からの出力結果</span></span>を返す（return がなければ何も返さない）。</p>
   </div>
 
   <div class="section-title"><span class="icon">&#10067;</span> 確認問題</div>
@@ -214,19 +251,19 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
       <div class="quiz-header"><span class="quiz-num">1</span><span class="quiz-title">このコードを実行すると、何が表示されますか？</span></div>
       <div class="quiz-code">def greet():\n    print("おはよう！")\n    print("今日もよろしく！")\n\ngreet()</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="1">解答を見る</button></div>
-      <div class="quiz-answer" data-answer="1"><div class="quiz-answer-inner">「おはよう！」と「今日もよろしく！」の2行が表示されます。greet() を呼び出すと、関数の中身が上から順に実行されます。</div></div>
+      <div class="quiz-answer" data-answer="1"><div class="quiz-answer-inner">「おはよう！」と「今日もよろしく！」の2行が表示されます。greet() を呼び出すと、<span class="term">関数<span class="term-popup">ファンクション — 処理をまとめたブロック</span></span>の中身が上から順に実行されます。</div></div>
     </div>
     <div class="quiz-card" data-quiz="2">
       <div class="quiz-header"><span class="quiz-num">2</span><span class="quiz-title">result には何が入りますか？</span></div>
       <div class="quiz-code">def double(n):\n    return n * 2\n\nresult = double(5)</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="2">解答を見る</button></div>
-      <div class="quiz-answer" data-answer="2"><div class="quiz-answer-inner">result には 10 が入ります。double(5) は 5 * 2 = 10 を返します。</div></div>
+      <div class="quiz-answer" data-answer="2"><div class="quiz-answer-inner"><span class="term">result<span class="term-popup">リザルト — 結果</span></span> には 10 が入ります。double(5) は 5 * 2 = 10 を<span class="term">返し<span class="term-popup">リターン・バリュー — 関数からの出力結果</span></span>ます。</div></div>
     </div>
     <div class="quiz-card" data-quiz="3">
       <div class="quiz-header"><span class="quiz-num">3</span><span class="quiz-title">check(3) は何を返しますか？</span></div>
       <div class="quiz-code">def check(count):\n    if count > 5:\n        return "多い"\n    return "少ない"</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="3">解答を見る</button></div>
-      <div class="quiz-answer" data-answer="3"><div class="quiz-answer-inner">"少ない" を返します。3 > 5 は False なので、if ブロックをスキップして最後の return が実行されます。</div></div>
+      <div class="quiz-answer" data-answer="3"><div class="quiz-answer-inner">"少ない" を返します。<span class="term">count<span class="term-popup">カウント — 数</span></span> > 5 は False なので、if ブロックをスキップして最後の return が実行されます。</div></div>
     </div>
   </div>
 
@@ -332,6 +369,22 @@ for (var b = 0; b < revealButtons.length; b++) {
     this.textContent = isOpen ? '解答を見る' : '解答を隠す';
   });
 }
+
+// Term tooltip toggle for mobile
+var terms = document.querySelectorAll('.term');
+for (var t = 0; t < terms.length; t++) {
+  terms[t].addEventListener('click', function(e) {
+    e.stopPropagation();
+    var wasActive = this.classList.contains('active');
+    var allTerms = document.querySelectorAll('.term.active');
+    for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
+    if (!wasActive) this.classList.add('active');
+  });
+}
+document.addEventListener('click', function() {
+  var allTerms = document.querySelectorAll('.term.active');
+  for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
+});
 </script>
 </body>
 </html>

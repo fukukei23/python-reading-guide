@@ -144,10 +144,48 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 .step-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: all var(--transition); }
 .step-dot.active { background: #a78bfa; box-shadow: 0 0 8px rgba(167,139,250,0.5); }
 .step-dot.done { background: var(--accent); }
+.term {
+  border-bottom: 1px dashed var(--accent);
+  cursor: help;
+  position: relative;
+  color: #c4b5fd;
+}
+.term:hover { color: var(--fg-bright); }
+.term-popup {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a1a2e;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--fg);
+  white-space: nowrap;
+  z-index: 100;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  pointer-events: none;
+}
+.term-popup::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--accent);
+}
+.term:hover .term-popup,
+.term.active .term-popup { display: block; }
+
 @media (max-width: 600px) {
   .container { padding: 16px 14px 48px; }
   h1 { font-size: 22px; } h1 span { font-size: 15px; }
   .line-content { font-size: 12px; } .line-num { width: 36px; }
+  .term-popup { white-space: normal; min-width: 180px; left: 0; transform: none; }
 }
 </style>
 </head>
@@ -156,7 +194,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <header>
     <div class="header-top">
-      <span class="header-label">Python 読解ガイド</span>
+      <a href="../../index.html" style="font-size:13px;color:var(--fg-dim);text-decoration:none;display:flex;align-items:center;gap:4px;"><span class="header-label">Python 読解ガイド</span>larr; トップへ</a>
       <span class="header-step">2 / 10</span>
     </div>
     <div class="progress-track"><div class="progress-fill"></div></div>
@@ -165,7 +203,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <div class="concept-card">
     <div class="concept-label">CONCEPT</div>
-    <p>文字列の中に <code>f"..."</code> と書くと、<code>{}</code> の中に変数や計算をそのまま入れられます。「f」は formatted（整形された）の意味です。</p>
+    <p>文字列の中に <code>f"..."</code> と書くと、<code>{}</code> の中に変数や計算をそのまま入れられます。「f」は formatted（整形された）の意味です。<span class="term">f文字列<span class="term-popup">エフ・モジレツ — 変数を文字列に埋め込む書き方</span></span>と呼びます。</p>
   </div>
 
   <section style="margin-bottom:40px;">
@@ -194,7 +232,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
   <table class="guide-table">
     <thead><tr><th>コード</th><th>読み方</th></tr></thead>
     <tbody>
-      <tr><td><code>f"{name}さん"</code></td><td>あいさつ文を作る</td></tr>
+      <tr><td><code>f"{name}さん"</code></td><td><span class="term">name<span class="term-popup">ネーム — 名前</span></span>であいさつ文を作る</td></tr>
       <tr><td><code>f"{len(items)}個"</code></td><td>長さや個数を表示</td></tr>
       <tr><td><code>f"{rate:.1%}"</code></td><td>パーセント表示（0.85 → 85.0%）</td></tr>
       <tr><td><code>f"{number:05d}"</code></td><td>ゼロ埋め（42 → 00042）</td></tr>
@@ -203,7 +241,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <div class="key-point">
     <div class="kp-label">KEY POINT</div>
-    <p>文字列の開始引用符の前に <code>f</code> をつける。変数を入れたい場所に <code>{変数名}</code> と書く。<code>{ }</code> の中には式（計算）も書ける。<code>:.</code> の後に書式指定ができる（<code>.2f</code> = 小数2桁）。</p>
+    <p><span class="term">f文字列<span class="term-popup">f-string（エフ文字列）。変数を文字列に埋め込む書き方</span></span>では、文字列の開始引用符の前に <code>f</code> をつける。変数を入れたい場所に <code>{変数名}</code> と書く。<code>{ }</code> の中には式（計算）も書ける。<code>:.</code> の後に書式指定ができる（<code>.2f</code> = 小数2桁）。</p>
   </div>
 
   <div class="section-title"><span class="icon">&#10067;</span> 確認問題</div>
@@ -323,6 +361,22 @@ for (var b = 0; b < revealButtons.length; b++) {
     this.textContent = isOpen ? '解答を見る' : '解答を隠す';
   });
 }
+
+// Term tooltip toggle for mobile
+var terms = document.querySelectorAll('.term');
+for (var t = 0; t < terms.length; t++) {
+  terms[t].addEventListener('click', function(e) {
+    e.stopPropagation();
+    var wasActive = this.classList.contains('active');
+    var allTerms = document.querySelectorAll('.term.active');
+    for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
+    if (!wasActive) this.classList.add('active');
+  });
+}
+document.addEventListener('click', function() {
+  var allTerms = document.querySelectorAll('.term.active');
+  for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
+});
 </script>
 </body>
 </html>

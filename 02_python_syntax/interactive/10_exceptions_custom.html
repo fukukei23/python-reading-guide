@@ -145,10 +145,48 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 .step-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: all var(--transition); }
 .step-dot.active { background: #a78bfa; box-shadow: 0 0 8px rgba(167,139,250,0.5); }
 .step-dot.done { background: var(--accent); }
+.term {
+  border-bottom: 1px dashed var(--accent);
+  cursor: help;
+  position: relative;
+  color: #c4b5fd;
+}
+.term:hover { color: var(--fg-bright); }
+.term-popup {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a1a2e;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--fg);
+  white-space: nowrap;
+  z-index: 100;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  pointer-events: none;
+}
+.term-popup::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--accent);
+}
+.term:hover .term-popup,
+.term.active .term-popup { display: block; }
+
 @media (max-width: 600px) {
   .container { padding: 16px 14px 48px; }
   h1 { font-size: 22px; } h1 span { font-size: 15px; }
   .line-content { font-size: 12px; } .line-num { width: 36px; }
+  .term-popup { white-space: normal; min-width: 180px; left: 0; transform: none; }
 }
 </style>
 </head>
@@ -157,7 +195,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <header>
     <div class="header-top">
-      <span class="header-label">Python 読解ガイド</span>
+      <a href="../../index.html" style="font-size:13px;color:var(--fg-dim);text-decoration:none;display:flex;align-items:center;gap:4px;"><span class="header-label">Python 読解ガイド</span>larr; トップへ</a>
       <span class="header-step">10 / 10</span>
     </div>
     <div class="progress-track"><div class="progress-fill"></div></div>
@@ -166,7 +204,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <div class="concept-card">
     <div class="concept-label">CONCEPT</div>
-    <p>プログラムが実行中に「困ったことが起きた」と報告するのが例外です。Pythonには色々な種類の例外があり、それぞれ「何が起きたか」を知らせてくれます。</p>
+    <p>プログラムが実行中に「困ったことが起きた」と報告するのが<span class="term">例外<span class="term-popup">exception（エクセプション）。エラーの種類</span></span>です。Pythonには色々な種類の例外があり、それぞれ「何が起きたか」を知らせてくれます。</p>
   </div>
 
   <section style="margin-bottom:40px;">
@@ -208,7 +246,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <div class="key-point">
     <div class="kp-label">KEY POINT</div>
-    <p><code>try / except</code> で囲んでエラーを防ぐ。<code>except Exception as e:</code> で全般的な例外を受け取る。<code>raise</code> で自分から例外を出すこともできる。<code>finally</code> で必ず実行する処理を書く。</p>
+    <p><code>try / except</code> で囲んで<span class="term">例外<span class="term-popup">exception（エクセプション）。エラーの種類</span></span>エラーを防ぐ。<code>except Exception as e:</code> で全般的な例外を受け取る。<code>raise</code> で自分から例外を出すこともできる。<code>finally</code> で必ず実行する処理を書く。</p>
   </div>
 
   <div class="section-title"><span class="icon">&#10067;</span> 確認問題</div>
@@ -217,7 +255,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
       <div class="quiz-header"><span class="quiz-num">1</span><span class="quiz-title">次のコードはどの例外が起きる？</span></div>
       <div class="quiz-code">data = [1, 2, 3]\nprint(data[5])</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="1">解答を見る</button></div>
-      <div class="quiz-answer" data-answer="1"><div class="quiz-answer-inner">IndexError です。リストの長さは3なのにインデックス5にアクセスしようとしているため、「範囲外」のエラーになります。</div></div>
+      <div class="quiz-answer" data-answer="1"><div class="quiz-answer-inner">IndexError です。リストの長さは3なのにインデックス5にアクセスしようとしているため、「範囲外」の<span class="term">例外<span class="term-popup">exception（エクセプション）。エラーの種類</span></span>エラーになります。</div></div>
     </div>
     <div class="quiz-card" data-quiz="2">
       <div class="quiz-header"><span class="quiz-num">2</span><span class="quiz-title">try / except を使って int("hello") のエラーを防いで</span></div>
@@ -229,7 +267,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
       <div class="quiz-header"><span class="quiz-num">3</span><span class="quiz-title">raise の役割は何？</span></div>
       <div class="quiz-code">age = 15\nif age < 18:\n    raise ValueError("18歳未満は登録できません")</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="3">解答を見る</button></div>
-      <div class="quiz-answer" data-answer="3"><div class="quiz-answer-inner">raise は自分から例外を発生させる命令です。プログラムの条件に合わないときに、エラーメッセージ付きで例外を出して処理を中断できます。</div></div>
+      <div class="quiz-answer" data-answer="3"><div class="quiz-answer-inner">raise は自分から例外を発生させる命令です。プログラムの条件に合わないときに、エラーメッセージ付きで<span class="term">例外<span class="term-popup">exception（エクセプション）。エラーの種類</span></span>を出して処理を中断できます。</div></div>
     </div>
   </div>
 
@@ -326,6 +364,22 @@ for (var b = 0; b < revealButtons.length; b++) {
     this.textContent = isOpen ? '解答を見る' : '解答を隠す';
   });
 }
+
+// Term tooltip toggle for mobile
+var terms = document.querySelectorAll('.term');
+for (var t = 0; t < terms.length; t++) {
+  terms[t].addEventListener('click', function(e) {
+    e.stopPropagation();
+    var wasActive = this.classList.contains('active');
+    var allTerms = document.querySelectorAll('.term.active');
+    for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
+    if (!wasActive) this.classList.add('active');
+  });
+}
+document.addEventListener('click', function() {
+  var allTerms = document.querySelectorAll('.term.active');
+  for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
+});
 </script>
 </body>
 </html>

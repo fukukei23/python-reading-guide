@@ -144,10 +144,48 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 .step-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: all var(--transition); }
 .step-dot.active { background: #a78bfa; box-shadow: 0 0 8px rgba(167,139,250,0.5); }
 .step-dot.done { background: var(--accent); }
+.term {
+  border-bottom: 1px dashed var(--accent);
+  cursor: help;
+  position: relative;
+  color: #c4b5fd;
+}
+.term:hover { color: var(--fg-bright); }
+.term-popup {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a1a2e;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--fg);
+  white-space: nowrap;
+  z-index: 100;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  pointer-events: none;
+}
+.term-popup::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--accent);
+}
+.term:hover .term-popup,
+.term.active .term-popup { display: block; }
+
 @media (max-width: 600px) {
   .container { padding: 16px 14px 48px; }
   h1 { font-size: 22px; } h1 span { font-size: 15px; }
   .line-content { font-size: 12px; } .line-num { width: 36px; }
+  .term-popup { white-space: normal; min-width: 180px; left: 0; transform: none; }
 }
 </style>
 </head>
@@ -156,7 +194,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <header>
     <div class="header-top">
-      <span class="header-label">Python 読解ガイド</span>
+      <a href="../../index.html" style="font-size:13px;color:var(--fg-dim);text-decoration:none;display:flex;align-items:center;gap:4px;"><span class="header-label">Python 読解ガイド</span>larr; トップへ</a>
       <span class="header-step">5 / 10</span>
     </div>
     <div class="progress-track"><div class="progress-fill"></div></div>
@@ -165,7 +203,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <div class="concept-card">
     <div class="concept-label">CONCEPT</div>
-    <p>関数を作るとき、引数の数を決めなくていい書き方です。<code>*args</code> はいくつでも「普通の引数」をタプルで受け取り、<code>**kwargs</code> はいくつでも「名前つき引数」を辞書で受け取ります。</p>
+    <p>関数を作るとき、引数の数を決めなくていい書き方です。<span class="term">*args<span class="term-popup">アーグズ — 引数まとめ（タプル）</span></span> はいくつでも「普通の引数」をタプルで受け取り、<span class="term">**kwargs<span class="term-popup">クワーグズ — 名前付き引数まとめ（辞書）</span></span> はいくつでも「名前つき引数」を辞書で受け取ります。</p>
   </div>
 
   <section style="margin-bottom:40px;">
@@ -204,7 +242,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <div class="key-point">
     <div class="kp-label">KEY POINT</div>
-    <p><code>*</code> は「余った普通の引数をまとめる」、<code>**</code> は「余った名前つき引数をまとめる」。並び順は <code>普通の引数 → *args → **kwargs</code>。<code>args</code> と <code>kwargs</code> は慣例としてこの名前を使う。</p>
+    <p><span class="term">*args<span class="term-popup">アーグズ — 引数まとめ（タプル）</span></span>の <code>*</code> は「余った普通の引数をまとめる」、<span class="term">**kwargs<span class="term-popup">クワーグズ — 名前付き引数まとめ（辞書）</span></span>の <code>**</code> は「余った名前つき引数をまとめる」。並び順は <code>普通の引数 → *args → **kwargs</code>。<code>args</code> と <code>kwargs</code> は慣例としてこの名前を使う。</p>
   </div>
 
   <div class="section-title"><span class="icon">&#10067;</span> 確認問題</div>
@@ -213,7 +251,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
       <div class="quiz-header"><span class="quiz-num">1</span><span class="quiz-title">test("a", "b", "c") で args の値は？</span></div>
       <div class="quiz-code">def test(*args):\n    print(args)\n\ntest("a", "b", "c")</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="1">解答を見る</button></div>
-      <div class="quiz-answer" data-answer="1"><div class="quiz-answer-inner">('a', 'b', 'c') です。3つの引数がタプルとしてまとめられます。</div></div>
+      <div class="quiz-answer" data-answer="1"><div class="quiz-answer-inner">('a', 'b', 'c') です。3つの引数がタプルとしてまとめられます。<span class="term">args<span class="term-popup">アーグズ — 引数まとめ</span></span> には (&apos;a&apos;, &apos;b&apos;, &apos;c&apos;) が入ります。</div></div>
     </div>
     <div class="quiz-card" data-quiz="2">
       <div class="quiz-header"><span class="quiz-num">2</span><span class="quiz-title">greet(name="花子", mood="元気") で kwargs の値は？</span></div>
@@ -225,7 +263,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
       <div class="quiz-header"><span class="quiz-num">3</span><span class="quiz-title">def wrong(**kwargs, *args) はエラーになる。なぜ？</span></div>
       <div class="quiz-code">def wrong(**kwargs, *args):\n    pass</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="3">解答を見る</button></div>
-      <div class="quiz-answer" data-answer="3"><div class="quiz-answer-inner">並び順が間違っているからです。正しい順序は「普通の引数 → *args → **kwargs」です。**kwargs は必ず最後に書きます。</div></div>
+      <div class="quiz-answer" data-answer="3"><div class="quiz-answer-inner">並び順が間違っているからです。正しい順序は「普通の引数 → <span class="term">*args<span class="term-popup">アーグズ — 引数まとめ（タプル）</span></span> → <span class="term">**kwargs<span class="term-popup">クワーグズ — 名前付き引数まとめ（辞書）</span></span>」です。**kwargs は必ず最後に書きます。</div></div>
     </div>
   </div>
 
@@ -332,6 +370,22 @@ for (var b = 0; b < revealButtons.length; b++) {
     this.textContent = isOpen ? '解答を見る' : '解答を隠す';
   });
 }
+
+// Term tooltip toggle for mobile
+var terms = document.querySelectorAll('.term');
+for (var t = 0; t < terms.length; t++) {
+  terms[t].addEventListener('click', function(e) {
+    e.stopPropagation();
+    var wasActive = this.classList.contains('active');
+    var allTerms = document.querySelectorAll('.term.active');
+    for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
+    if (!wasActive) this.classList.add('active');
+  });
+}
+document.addEventListener('click', function() {
+  var allTerms = document.querySelectorAll('.term.active');
+  for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
+});
 </script>
 </body>
 </html>

@@ -145,10 +145,47 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 .step-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: all var(--transition); }
 .step-dot.active { background: #a78bfa; box-shadow: 0 0 8px rgba(167,139,250,0.5); }
 .step-dot.done { background: var(--accent); }
+.term {
+  border-bottom: 1px dashed var(--accent);
+  cursor: help;
+  position: relative;
+  color: #c4b5fd;
+}
+.term:hover { color: var(--fg-bright); }
+.term-popup {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a1a2e;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--fg);
+  white-space: nowrap;
+  z-index: 100;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  pointer-events: none;
+}
+.term-popup::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--accent);
+}
+.term:hover .term-popup,
+.term.active .term-popup { display: block; }
 @media (max-width: 600px) {
   .container { padding: 16px 14px 48px; }
   h1 { font-size: 22px; } h1 span { font-size: 15px; }
   .line-content { font-size: 12px; } .line-num { width: 36px; }
+  .term-popup { white-space: normal; min-width: 180px; left: 0; transform: none; }
 }
 </style>
 </head>
@@ -157,7 +194,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <header>
     <div class="header-top">
-      <span class="header-label">Python 読解ガイド</span>
+      <a href="../../index.html" style="font-size:13px;color:var(--fg-dim);text-decoration:none;display:flex;align-items:center;gap:4px;"><span class="header-label">Python 読解ガイド</span>larr; トップへ</a>
       <span class="header-step">6 / 20</span>
     </div>
     <div class="progress-track"><div class="progress-fill"></div></div>
@@ -166,7 +203,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <div class="concept-card">
     <div class="concept-label">CONCEPT</div>
-    <p>リストは「順番のある箱の並び」です。買い物リストのように、複数のデータを1つのまとまりとして扱えます。</p>
+    <p><span class="term">リスト<span class="term-popup">リスト — 順序付きコレクション</span></span>は「順番のある箱の並び」です。買い物リストのように、複数のデータを1つのまとまりとして扱えます。</p>
   </div>
 
   <section style="margin-bottom:40px;">
@@ -195,17 +232,17 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
   <table class="guide-table">
     <thead><tr><th>コード</th><th>読み方</th></tr></thead>
     <tbody>
-      <tr><td><code>colors = ["赤", "青", "緑"]</code></td><td>3つの文字を並べたリストを作る</td></tr>
-      <tr><td><code>colors[0]</code></td><td>1番目の要素（"赤"）を取り出す</td></tr>
+      <tr><td><code>colors = ["赤", "青", "緑"]</code></td><td>3つの文字を並べた<span class="term">リスト<span class="term-popup">リスト — 順序付きコレクション</span></span>を作る</td></tr>
+      <tr><td><code>colors[0]</code></td><td><span class="term">colors<span class="term-popup">カラーズ — 色（複数形）</span></span>[0] で1番目の要素（"赤"）を取り出す</td></tr>
       <tr><td><code>len(colors)</code></td><td>リストの長さ（要素数）を返す</td></tr>
-      <tr><td><code>cart.append("ノートPC")</code></td><td>cart の末尾に要素を追加する</td></tr>
-      <tr><td><code>cart.remove("マウス")</code></td><td>cart から "マウス" を削除する</td></tr>
+      <tr><td><code>cart.append("ノートPC")</code></td><td><span class="term">cart<span class="term-popup">カート — 買い物かご</span></span> の末尾に要素を追加する</td></tr>
+      <tr><td><code>cart.remove("マウス")</code></td><td><span class="term">cart<span class="term-popup">カート — 買い物かご</span></span> から "マウス" を削除する</td></tr>
     </tbody>
   </table>
 
   <div class="key-point">
     <div class="kp-label">KEY POINT</div>
-    <p>番号は <strong>0から</strong> 始まる（1番目 = <code>[0]</code>、2番目 = <code>[1]</code>）。<code>[ ]</code>（角カッコ）で囲む。<code>len()</code> で長さを調べる。</p>
+    <p>番号は <strong>0から</strong> 始まる（1番目 = <code>[0]</code>、2番目 = <code>[1]</code>）。<code>[ ]</code>（角カッコ）で囲む。<code>len()</code> で<span class="term">リスト<span class="term-popup">リスト — 順序付きコレクション</span></span>の長さを調べる。</p>
   </div>
 
   <div class="section-title"><span class="icon">&#10067;</span> 確認問題</div>
@@ -220,7 +257,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
       <div class="quiz-header"><span class="quiz-num">2</span><span class="quiz-title">実行後の cart の中身はどうなりますか？</span></div>
       <div class="quiz-code">cart = ["りんご", "バナナ"]\ncart.append("みかん")\ncart.remove("バナナ")</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="2">解答を見る</button></div>
-      <div class="quiz-answer" data-answer="2"><div class="quiz-answer-inner">cart は ["りんご", "みかん"] になります。"みかん" を追加した後、"バナナ" を削除します。</div></div>
+      <div class="quiz-answer" data-answer="2"><div class="quiz-answer-inner"><span class="term">cart<span class="term-popup">カート — 買い物かご</span></span> は ["りんご", "みかん"] になります。"みかん" を追加した後、"バナナ" を削除します。</div></div>
     </div>
     <div class="quiz-card" data-quiz="3">
       <div class="quiz-header"><span class="quiz-num">3</span><span class="quiz-title">このコードは何を表示しますか？</span></div>
@@ -331,6 +368,22 @@ for (var b = 0; b < revealButtons.length; b++) {
     this.textContent = isOpen ? '解答を見る' : '解答を隠す';
   });
 }
+
+// Term tooltip toggle for mobile
+var terms = document.querySelectorAll('.term');
+for (var t = 0; t < terms.length; t++) {
+  terms[t].addEventListener('click', function(e) {
+    e.stopPropagation();
+    var wasActive = this.classList.contains('active');
+    var allTerms = document.querySelectorAll('.term.active');
+    for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
+    if (!wasActive) this.classList.add('active');
+  });
+}
+document.addEventListener('click', function() {
+  var allTerms = document.querySelectorAll('.term.active');
+  for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
+});
 </script>
 </body>
 </html>

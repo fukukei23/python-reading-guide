@@ -145,10 +145,47 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 .step-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: all var(--transition); }
 .step-dot.active { background: #a78bfa; box-shadow: 0 0 8px rgba(167,139,250,0.5); }
 .step-dot.done { background: var(--accent); }
+.term {
+  border-bottom: 1px dashed var(--accent);
+  cursor: help;
+  position: relative;
+  color: #c4b5fd;
+}
+.term:hover { color: var(--fg-bright); }
+.term-popup {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a1a2e;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--fg);
+  white-space: nowrap;
+  z-index: 100;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  pointer-events: none;
+}
+.term-popup::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--accent);
+}
+.term:hover .term-popup,
+.term.active .term-popup { display: block; }
 @media (max-width: 600px) {
   .container { padding: 16px 14px 48px; }
   h1 { font-size: 22px; } h1 span { font-size: 15px; }
   .line-content { font-size: 12px; } .line-num { width: 36px; }
+  .term-popup { white-space: normal; min-width: 180px; left: 0; transform: none; }
 }
 </style>
 </head>
@@ -157,7 +194,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <header>
     <div class="header-top">
-      <span class="header-label">Python 読解ガイド</span>
+      <a href="../../index.html" style="font-size:13px;color:var(--fg-dim);text-decoration:none;display:flex;align-items:center;gap:4px;"><span class="header-label">Python 読解ガイド</span>larr; トップへ</a>
       <span class="header-step">7 / 20</span>
     </div>
     <div class="progress-track"><div class="progress-fill"></div></div>
@@ -166,7 +203,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <div class="concept-card">
     <div class="concept-label">CONCEPT</div>
-    <p>辞書は「名前（キー）で値を引き出せる箱」です。名簿で「田中」のページを開いて電話番号を見つけるようなもの。</p>
+    <p><span class="term">辞書<span class="term-popup">ディクショナリ — キーと値のペア</span></span>は「名前（キー）で値を引き出せる箱」です。名簿で「田中」のページを開いて電話番号を見つけるようなもの。</p>
   </div>
 
   <section style="margin-bottom:40px;">
@@ -200,15 +237,15 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
     <thead><tr><th>コード</th><th>読み方</th></tr></thead>
     <tbody>
       <tr><td><code>"name": "山田"</code></td><td>キー "name" に値 "山田" を紐付ける</td></tr>
-      <tr><td><code>user["name"]</code></td><td>user の "name" に対応する値を取り出す</td></tr>
-      <tr><td><code>product["price"] = 1480</code></td><td>"price" の値を 1480 に書き換える</td></tr>
-      <tr><td><code>"messages": [message]</code></td><td>値にはリストも入れられる</td></tr>
+      <tr><td><code>user["name"]</code></td><td><span class="term">user<span class="term-popup">ユーザー — 利用者</span></span> の "name" に対応する値を取り出す</td></tr>
+      <tr><td><code>product["price"] = 1480</code></td><td>"<span class="term">price<span class="term-popup">プライス — 価格</span></span>" の値を 1480 に書き換える</td></tr>
+      <tr><td><code>"messages": [message]</code></td><td>値には<span class="term">リスト<span class="term-popup">リスト — 順序付きコレクション</span></span>も入れられる</td></tr>
     </tbody>
   </table>
 
   <div class="key-point">
     <div class="kp-label">KEY POINT</div>
-    <p><code>{ }</code>（中カッコ）で囲む。<code>キー: 値</code> のペアをカンマで並べる。リストは番号で取り出すが、辞書は「キー（名前）」で取り出す。</p>
+    <p><code>{ }</code>（中カッコ）で囲む。<code>キー: 値</code> のペアをカンマで並べる。<span class="term">リスト<span class="term-popup">リスト — 順序付きコレクション</span></span>は番号で取り出すが、<span class="term">辞書<span class="term-popup">ディクショナリ — キーと値のペア</span></span>は「キー（名前）」で取り出す。</p>
   </div>
 
   <div class="section-title"><span class="icon">&#10067;</span> 確認問題</div>
@@ -217,7 +254,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
       <div class="quiz-header"><span class="quiz-num">1</span><span class="quiz-title">x に入る値は何ですか？</span></div>
       <div class="quiz-code">item = {"id": "A001", "name": "コーヒー", "price": 350}\nx = item["price"]</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="1">解答を見る</button></div>
-      <div class="quiz-answer" data-answer="1"><div class="quiz-answer-inner">x には 350 が入ります。キー "price" に対応する値は 350 です。</div></div>
+      <div class="quiz-answer" data-answer="1"><div class="quiz-answer-inner">x には 350 が入ります。キー "<span class="term">price<span class="term-popup">プライス — 価格</span></span>" に対応する値は 350 です。</div></div>
     </div>
     <div class="quiz-card" data-quiz="2">
       <div class="quiz-header"><span class="quiz-num">2</span><span class="quiz-title">実行後の player の中身はどうなりますか？</span></div>
@@ -229,7 +266,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
       <div class="quiz-header"><span class="quiz-num">3</span><span class="quiz-title">このコードは何を表示しますか？</span></div>
       <div class="quiz-code">book = {"title": "Python入門", "page": 250}\nprint(book.get("author", "不明"))</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="3">解答を見る</button></div>
-      <div class="quiz-answer" data-answer="3"><div class="quiz-answer-inner">"不明" と表示されます。キー "author" は存在しないので、.get() のデフォルト値 "不明" が返ります。</div></div>
+      <div class="quiz-answer" data-answer="3"><div class="quiz-answer-inner">"不明" と表示されます。キー "author" は存在しないので、.get() の<span class="term">ディフォルト・バリュー — 省略時の初期値<span class="term-popup">default value。引数を省略したときの初期値</span></span> "不明" が返ります。</div></div>
     </div>
   </div>
 
@@ -333,6 +370,22 @@ for (var b = 0; b < revealButtons.length; b++) {
     this.textContent = isOpen ? '解答を見る' : '解答を隠す';
   });
 }
+
+// Term tooltip toggle for mobile
+var terms = document.querySelectorAll('.term');
+for (var t = 0; t < terms.length; t++) {
+  terms[t].addEventListener('click', function(e) {
+    e.stopPropagation();
+    var wasActive = this.classList.contains('active');
+    var allTerms = document.querySelectorAll('.term.active');
+    for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
+    if (!wasActive) this.classList.add('active');
+  });
+}
+document.addEventListener('click', function() {
+  var allTerms = document.querySelectorAll('.term.active');
+  for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
+});
 </script>
 </body>
 </html>

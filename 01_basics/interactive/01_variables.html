@@ -144,10 +144,47 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 .step-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: all var(--transition); }
 .step-dot.active { background: #a78bfa; box-shadow: 0 0 8px rgba(167,139,250,0.5); }
 .step-dot.done { background: var(--accent); }
+.term {
+  border-bottom: 1px dashed var(--accent);
+  cursor: help;
+  position: relative;
+  color: #c4b5fd;
+}
+.term:hover { color: var(--fg-bright); }
+.term-popup {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a1a2e;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--fg);
+  white-space: nowrap;
+  z-index: 100;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  pointer-events: none;
+}
+.term-popup::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--accent);
+}
+.term:hover .term-popup,
+.term.active .term-popup { display: block; }
 @media (max-width: 600px) {
   .container { padding: 16px 14px 48px; }
   h1 { font-size: 22px; } h1 span { font-size: 15px; }
   .line-content { font-size: 12px; } .line-num { width: 36px; }
+  .term-popup { white-space: normal; min-width: 180px; left: 0; transform: none; }
 }
 </style>
 </head>
@@ -156,7 +193,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <header>
     <div class="header-top">
-      <span class="header-label">Python 読解ガイド</span>
+      <a href="../../index.html" style="font-size:13px;color:var(--fg-dim);text-decoration:none;display:flex;align-items:center;gap:4px;">&larr; トップへ</a>
       <span class="header-step">1 / 20</span>
     </div>
     <div class="progress-track"><div class="progress-fill"></div></div>
@@ -165,7 +202,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <div class="concept-card">
     <div class="concept-label">CONCEPT</div>
-    <p>変数は「データを入れる箱」です。箱に名前を付けて、あとでその名前で中身を取り出せます。</p>
+    <p><span class="term">変数<span class="term-popup">variable（ヴェアリアブル）— 値を覚えておくための「名前付きの箱」</span></span>は「データを入れる箱」です。箱に名前を付けて、あとでその名前で中身を取り出せます。</p>
   </div>
 
   <section style="margin-bottom:40px;">
@@ -194,15 +231,15 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
   <table class="guide-table">
     <thead><tr><th>コード</th><th>読み方</th></tr></thead>
     <tbody>
-      <tr><td><code>price = 1980</code></td><td>price という箱に 1980 という数字を入れる</td></tr>
-      <tr><td><code>tax_rate = 0.10</code></td><td>tax_rate という箱に 0.10 という小数を入れる</td></tr>
-      <tr><td><code>total = price * (1 + tax_rate)</code></td><td>price x (1 + tax_rate) を計算して total に入れる</td></tr>
+      <tr><td><code>price = 1980</code></td><td><span class="term">price<span class="term-popup">プライス — 価格</span></span> という箱に 1980 という数字を入れる</td></tr>
+      <tr><td><code>tax_rate = 0.10</code></td><td><span class="term">tax_rate<span class="term-popup">タックス・レート — 税率</span></span> という箱に 0.10 という小数を入れる</td></tr>
+      <tr><td><code>total = price * (1 + tax_rate)</code></td><td>price × (1 + tax_rate) を計算して <span class="term">total<span class="term-popup">トータル — 合計</span></span> に入れる</td></tr>
     </tbody>
   </table>
 
   <div class="key-point">
     <div class="kp-label">KEY POINT</div>
-    <p><code>=</code> は「等しい」ではなく「右辺を左の箱に入れる」と読む。箱の名前（変数名）は英語で付けるのがルール。文字は <code>"</code> で囲む、数字は囲まない。</p>
+    <p><code>=</code> は「等しい」ではなく「右辺を左の箱に入れる」と読む。箱の名前（<span class="term">変数名<span class="term-popup">ヴェアリアブル・メイ — 変数につける名前。英語で意味が分かるように付ける</span></span>）は英語で付けるのがルール。文字は <code>"</code> で囲む、数字は囲まない。</p>
   </div>
 
   <div class="section-title"><span class="icon">&#10067;</span> 確認問題</div>
@@ -211,7 +248,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
       <div class="quiz-header"><span class="quiz-num">1</span><span class="quiz-title">このコードは何をしていますか？</span></div>
       <div class="quiz-code">user_name = "田中さん"\ngreeting = "こんにちは、" + user_name</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="1">解答を見る</button></div>
-      <div class="quiz-answer" data-answer="1"><div class="quiz-answer-inner">user_name に "田中さん" を入れ、それを "こんにちは、" と繋いで greeting に入れます。結果: greeting = "こんにちは、田中さん"</div></div>
+      <div class="quiz-answer" data-answer="1"><div class="quiz-answer-inner"><span class="term">user_name<span class="term-popup">ユーザー・ネーム — ユーザー名</span></span> に "田中さん" を入れ、それを "こんにちは、" と繋いで <span class="term">greeting<span class="term-popup">グリーティング — 挨拶</span></span> に入れます。結果: greeting = "こんにちは、田中さん"</div></div>
     </div>
     <div class="quiz-card" data-quiz="2">
       <div class="quiz-header"><span class="quiz-num">2</span><span class="quiz-title">total はいくつになりますか？</span></div>
@@ -332,6 +369,22 @@ for (var b = 0; b < revealButtons.length; b++) {
     this.textContent = isOpen ? '解答を見る' : '解答を隠す';
   });
 }
+
+// Term tooltip toggle for mobile (tap to show/hide)
+var terms = document.querySelectorAll('.term');
+for (var t = 0; t < terms.length; t++) {
+  terms[t].addEventListener('click', function(e) {
+    e.stopPropagation();
+    var wasActive = this.classList.contains('active');
+    var allTerms = document.querySelectorAll('.term.active');
+    for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
+    if (!wasActive) this.classList.add('active');
+  });
+}
+document.addEventListener('click', function() {
+  var allTerms = document.querySelectorAll('.term.active');
+  for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
+});
 </script>
 </body>
 </html>
