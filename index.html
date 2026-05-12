@@ -41,6 +41,20 @@ h1 span { color: var(--accent); }
 .card:hover .card-arrow { transform: translateX(4px); color: var(--accent); }
 .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
 .badge-interactive { background: rgba(52,211,153,0.15); color: var(--success); }
+.badge-done { background: rgba(124,58,237,0.15); color: #a78bfa; }
+.card-visited { border-color: rgba(124,58,237,0.3); }
+.card-visited .card-num { background: #a78bfa; }
+.card-check { display: none; color: var(--success); font-size: 14px; margin-left: auto; flex-shrink: 0; }
+.card-visited .card-check { display: block; }
+.progress-summary { margin-bottom: 32px; padding: 14px 20px; background: var(--bg-raised); border: 1px solid var(--border); border-radius: var(--radius); display: flex; justify-content: space-between; align-items: center; }
+.progress-summary .label { font-size: 14px; color: var(--fg-dim); }
+.progress-summary .count { font-size: 20px; font-weight: 700; color: var(--accent); }
+.progress-summary .bar { flex: 1; max-width: 200px; height: 6px; background: var(--border); border-radius: 4px; margin: 0 16px; overflow: hidden; }
+.progress-summary .bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), #a78bfa); border-radius: 4px; transition: width 0.6s ease; }
+.theme-toggle { background: none; border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; cursor: pointer; font-size: 16px; transition: all 0.2s; color: var(--fg-dim); position: absolute; top: 48px; right: 20px; }
+.theme-toggle:hover { border-color: var(--accent); color: var(--fg); }
+body.light { --bg: #f8f9fa; --bg-raised: #fff; --code-bg: #f1f3f5; --fg: #2d2d3f; --fg-dim: #6b7280; --fg-bright: #1a1a2e; --border: #e5e7eb; }
+body.light .card { background: #fff; }
 .footer { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--fg-dim); font-size: 13px; text-align: center; }
 .footer a { color: var(--accent); text-decoration: none; }
 @media (max-width: 600px) { .container { padding: 32px 14px 48px; } h1 { font-size: 24px; } }
@@ -50,6 +64,13 @@ h1 span { color: var(--accent); }
 <div class="container">
   <h1>Python <span>読解ガイド</span></h1>
   <p class="subtitle">コードを書かずに「読める」ようになるためのインタラクティブ教科書</p>
+  <button class="theme-toggle" type="button" aria-label="テーマ切替"></button>
+
+  <div class="progress-summary" id="progressSummary" style="display:none">
+    <span class="label">学習進捗</span>
+    <div class="bar"><div class="bar-fill" id="progressBar"></div></div>
+    <span class="count" id="progressCount">0 / 30</span>
+  </div>
 
   <div class="section-title">01. 基礎（Basics）</div>
   <div class="card-grid">
@@ -303,5 +324,47 @@ h1 span { color: var(--accent); }
     <a href="https://github.com/fukukei23/python-reading-guide">GitHub リポジトリ</a> &middot; Markdown版は各ディレクトリの .md ファイルをご覧ください
   </div>
 </div>
+<script>
+(function() {
+  // Theme toggle
+  var saved = localStorage.getItem('prg_theme');
+  if (saved === 'light') document.body.classList.add('light');
+  var toggle = document.querySelector('.theme-toggle');
+  if (toggle) {
+    toggle.textContent = document.body.classList.contains('light') ? '☀' : '☾';
+    toggle.addEventListener('click', function() {
+      document.body.classList.toggle('light');
+      var isLight = document.body.classList.contains('light');
+      toggle.textContent = isLight ? '☀' : '☾';
+      localStorage.setItem('prg_theme', isLight ? 'light' : 'dark');
+    });
+  }
+
+  // Progress tracking
+  try {
+    var data = JSON.parse(localStorage.getItem('prg_progress') || '{}');
+    var cards = document.querySelectorAll('.card');
+    var visited = 0;
+    for (var i = 0; i < cards.length; i++) {
+      var href = cards[i].getAttribute('href');
+      if (!href) continue;
+      var m = href.match(/(\d{2}_\w+)\/interactive\/(\d{2}_\w+)\.html/);
+      if (m && data[m[1] + '/' + m[2]]) {
+        cards[i].classList.add('card-visited');
+        var check = document.createElement('span');
+        check.className = 'card-check';
+        check.textContent = '✓';
+        cards[i].appendChild(check);
+        visited++;
+      }
+    }
+    if (visited > 0) {
+      document.getElementById('progressSummary').style.display = 'flex';
+      document.getElementById('progressCount').textContent = visited + ' / 30';
+      document.getElementById('progressBar').style.width = Math.round(visited / 30 * 100) + '%';
+    }
+  } catch(e) {}
+})();
+</script>
 </body>
 </html>

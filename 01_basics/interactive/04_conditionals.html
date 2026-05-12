@@ -187,6 +187,119 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
   .line-content { font-size: 12px; } .line-num { width: 36px; }
   .term-popup { white-space: normal; min-width: 180px; left: 0; transform: none; }
 }
+
+/* === A1: Line comments === */
+.code-line { display: flex; align-items: center; min-height: 38px; }
+.line-comment {
+  font-family: var(--font-ui); font-size: 12px; color: var(--fg-dim);
+  margin-left: 16px; display: flex; align-items: center;
+  white-space: normal; flex: 1; min-width: 0; opacity: 0.8;
+}
+.code-line.active .line-comment { opacity: 1; }
+
+/* === A2: Usage badge === */
+.usage-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.25);
+  border-radius: 20px; padding: 6px 14px; margin-top: 12px;
+  font-size: 13px; color: #6ee7b7; line-height: 1.4;
+}
+.usage-badge .badge-icon { font-size: 14px; }
+
+/* === B1: Sidebar === */
+.sidebar-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+  z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.3s;
+}
+.sidebar-overlay.open { opacity: 1; pointer-events: auto; }
+.sidebar {
+  position: fixed; top: 0; left: 0; bottom: 0; width: 300px;
+  background: var(--bg-raised); border-right: 1px solid var(--border);
+  z-index: 201; transform: translateX(-100%); transition: transform 0.3s ease;
+  overflow-y: auto; padding: 24px 16px;
+}
+.sidebar.open { transform: translateX(0); }
+.sidebar-title { font-size: 15px; color: var(--fg-bright); margin-bottom: 16px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
+.sidebar-section { margin-bottom: 14px; }
+.sidebar-heading { font-size: 11px; color: var(--fg-dim); font-weight: 700; letter-spacing: 0.08em; margin-bottom: 4px; padding: 0 8px; }
+.sidebar-link {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 8px; border-radius: 5px;
+  font-size: 13px; color: var(--fg-dim); text-decoration: none; transition: all 0.2s;
+}
+.sidebar-link:hover { background: rgba(255,255,255,0.05); color: var(--fg); }
+.sidebar-link.current { background: var(--accent-dim); color: var(--accent); font-weight: 600; }
+.sidebar-link .check { color: var(--success); font-size: 11px; display: none; }
+.sidebar-link.visited .check { display: inline; }
+.sidebar-close {
+  background: none; border: none; color: var(--fg-dim); cursor: pointer;
+  font-size: 20px; padding: 0 4px; line-height: 1;
+}
+.sidebar-close:hover { color: var(--fg); }
+.btn-hamburger {
+  background: none; border: none; cursor: pointer;
+  display: flex; flex-direction: column; gap: 4px; padding: 6px 4px;
+}
+.btn-hamburger span {
+  display: block; width: 18px; height: 2px; background: var(--fg-dim);
+  border-radius: 1px; transition: all 0.3s;
+}
+
+/* === C1: Help button === */
+.btn-help {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 12px; padding: 8px 16px;
+  background: rgba(251,191,36,0.08); border: 1px dashed rgba(251,191,36,0.3);
+  border-radius: 6px; color: var(--warning); font-size: 13px;
+  font-family: var(--font-ui); cursor: pointer; transition: all 0.2s;
+}
+.btn-help:hover { background: rgba(251,191,36,0.15); }
+.help-content {
+  max-height: 0; overflow: hidden; transition: max-height 0.4s ease;
+}
+.help-content.open { max-height: 500px; }
+.help-inner {
+  background: rgba(251,191,36,0.05); border-left: 3px solid var(--warning);
+  border-radius: 0 6px 6px 0; padding: 14px 18px; font-size: 14px;
+  line-height: 1.8; margin-top: 8px; white-space: pre-line;
+}
+
+/* === C2: Comparison view === */
+.comparison-section { margin-bottom: 36px; }
+.comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.comparison-card {
+  background: var(--code-bg); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden;
+}
+.comparison-label {
+  padding: 8px 14px; font-size: 12px; font-weight: 700;
+  background: rgba(0,0,0,0.15); border-bottom: 1px solid var(--border); color: var(--fg-dim);
+}
+.comparison-code {
+  padding: 14px 16px; font-family: var(--font-mono); font-size: 13px;
+  line-height: 1.8; white-space: pre; color: var(--fg);
+}
+
+/* === C3: Theme toggle === */
+.header-controls { display: flex; align-items: center; gap: 8px; }
+.theme-toggle {
+  background: none; border: 1px solid var(--border); border-radius: 6px;
+  padding: 4px 10px; cursor: pointer; font-size: 15px;
+  transition: all 0.2s; color: var(--fg-dim); line-height: 1;
+}
+.theme-toggle:hover { border-color: var(--accent); color: var(--fg); }
+body.light {
+  --bg: #f8f9fa; --bg-raised: #fff; --code-bg: #f1f3f5;
+  --accent: #7c3aed; --accent-dim: rgba(124,58,237,0.12);
+  --fg: #2d2d3f; --fg-dim: #6b7280; --fg-bright: #1a1a2e;
+  --border: #e5e7eb; --warning: #d97706; --success: #059669;
+}
+body.light .term-popup { background: #fff; box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+body.light .watch-panel { background: #f1f3f5; }
+body.light .sidebar { background: #fff; border-right-color: #e5e7eb; }
+body.light .concept-card { background: #fff; }
+body.light .quiz-card { background: #fff; }
+body.light .comparison-card { background: #f1f3f5; }
 </style>
 </head>
 <body>
@@ -194,9 +307,9 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <header>
     <div class="header-top">
-      <a href="../../index.html" style="font-size:13px;color:var(--fg-dim);text-decoration:none;display:flex;align-items:center;gap:4px;"><span class="header-label">Python 読解ガイド</span>larr; トップへ</a>
-      <span class="header-step">4 / 20</span>
-    </div>
+	    <a href="../../index.html" style="font-size:13px;color:var(--fg-dim);text-decoration:none;display:flex;align-items:center;gap:4px;">&larr; トップ</a>
+	    <div class="header-controls"><button class="btn-hamburger" type="button" aria-label="メニュー"><span></span><span></span><span></span></button><button class="theme-toggle" type="button" aria-label="テーマ切替"></button></div> <span class="header-step">4 / 20</span>
+	  </div>
     <div class="progress-track"><div class="progress-fill"></div></div>
     <h1>4. 条件分岐<span>(if / else)</span></h1>
   </header>
@@ -205,18 +318,19 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
     <div class="concept-label">CONCEPT</div>
     <p>「もし〇〇ならA、そうでなければB」という判断の仕組みです。<span class="term">条件分岐<span class="term-popup">コンディショナル — 条件によって処理を変える</span></span>は交差点で右折するか左折するか決めるようなもの。</p>
   </div>
+    <div class="usage-badge"><span class="badge-icon">📍</span> 使い道: 在庫管理で「在庫が0以下なら発注」という条件分岐</div>
 
-  <section style="margin-bottom:40px;">
+<section style="margin-bottom:40px;">
     <div class="section-title"><span class="icon">&#9654;</span> コードを1行ずつ実行してみよう</div>
     <div class="code-panel">
       <div class="code-toolbar"><span class="file-name">example.py</span><span class="lang-badge">Python</span></div>
       <div class="code-body" id="codeBody">
-        <div class="code-line" data-line="0"><span class="line-num">1</span><span class="line-content"><span class="syn-var">age</span> <span class="syn-op">=</span> <span class="syn-num">20</span></span></div>
-        <div class="code-line" data-line="1"><span class="line-num">2</span><span class="line-content"></span></div>
-        <div class="code-line" data-line="2"><span class="line-num">3</span><span class="line-content"><span class="syn-op">if</span> <span class="syn-var">age</span> <span class="syn-op">>=</span> <span class="syn-num">18</span>:</span></div>
-        <div class="code-line" data-line="3"><span class="line-num">4</span><span class="line-content">    <span class="syn-var">price</span> <span class="syn-op">=</span> <span class="syn-str">"大人料金です"</span></span></div>
-        <div class="code-line" data-line="4"><span class="line-num">5</span><span class="line-content"><span class="syn-op">else</span>:</span></div>
-        <div class="code-line" data-line="5"><span class="line-num">6</span><span class="line-content">    <span class="syn-var">price</span> <span class="syn-op">=</span> <span class="syn-str">"子供料金です"</span></span></div>
+        <div class="code-line" data-line="0"><span class="line-num">1</span><span class="line-content"><span class="syn-var">age</span> <span class="syn-op">=</span> <span class="syn-num">20</span></span><span class="line-comment"># age に 20 を入れる</span></div>
+        <div class="code-line" data-line="1"><span class="line-num">2</span><span class="line-content"></span><span class="line-comment"># age(20) >= 18 をチェック → True!</span></div>
+        <div class="code-line" data-line="2"><span class="line-num">3</span><span class="line-content"><span class="syn-op">if</span> <span class="syn-var">age</span> <span class="syn-op">>=</span> <span class="syn-num">18</span>:</span><span class="line-comment"># 条件に一致したので price に "大人料金です" を入れる</span></div>
+        <div class="code-line" data-line="3"><span class="line-num">4</span><span class="line-content">    <span class="syn-var">price</span> <span class="syn-op">=</span> <span class="syn-str">"大人料金です"</span></span><span class="line-comment"># else ブロックはスキップされる（条件に合った方だけ実行）</span></div>
+        <div class="code-line" data-line="4"><span class="line-num">5</span><span class="line-content"><span class="syn-op">else</span>:</span><span class="line-comment"># </span></div>
+        <div class="code-line" data-line="5"><span class="line-num">6</span><span class="line-content">    <span class="syn-var">price</span> <span class="syn-op">=</span> <span class="syn-str">"子供料金です"</span></span><span class="line-comment"># </span></div>
       </div>
       <div class="exec-indicator" id="execIndicator"><span class="arrow">&rarr;</span> <span class="desc">&laquo; 次の行 &raquo; ボタンを押して実行を開始</span></div>
     </div>
@@ -231,7 +345,13 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
     </div>
   </section>
 
-  <div class="section-title"><span class="icon">&#128218;</span> 読み方ガイド</div>
+  <div class="section-title"><button class="btn-help" type="button">❓ わからなかった</button>
+    <div class="help-content"><div class="help-inner">if文は「もし〜なら」という条件分岐です。
+条件が成り立つ（True）ならifの中身を実行し、
+成り立たない（False）ならelseの中身を実行します。
+日常生活の「雨が降ったら傘を持っていく」と同じ考え方です。</div></div>
+
+  <span class="icon">&#128218;</span> 読み方ガイド</div>
   <table class="guide-table">
     <thead><tr><th>コード</th><th>読み方</th></tr></thead>
     <tbody>
@@ -245,6 +365,29 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
   <div class="key-point">
     <div class="kp-label">KEY POINT</div>
     <p><code>if</code> → <code>elif</code> → <code>else</code> の順で書く。<span class="term">条件分岐<span class="term-popup">コンディショナル — 条件によって処理を変える</span></span>の最後に <code>:</code>（コロン）を付ける。条件に合ったブロックはインデント（字下げ）する。上から順にチェックして、最初に合ったものだけ実行。</p>
+  </div>
+
+  
+  <div class="comparison-section">
+    <div class="section-title"><span class="icon">⇄</span> if vs if-elif-else</div>
+    <div class="comparison-grid">
+      <div class="comparison-card">
+        <div class="comparison-label">if-else（2パターン）</div>
+        <div class="comparison-code">if score >= 60:
+    print("合格")
+else:
+    print("不合格")</div>
+      </div>
+      <div class="comparison-card">
+        <div class="comparison-label">if-elif-else（3パターン以上）</div>
+        <div class="comparison-code">if score >= 80:
+    print("優")
+elif score >= 60:
+    print("良")
+else:
+    print("不可")</div>
+      </div>
+    </div>
   </div>
 
   <div class="section-title"><span class="icon">&#10067;</span> 確認問題</div>
@@ -273,6 +416,47 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
     <a class="nav-link nav-prev" href="03_parameters.html">&larr; 前: 引数と戻り値</a>
     <a class="nav-link nav-next" href="05_loops.html">次: 繰り返し &rarr;</a>
   </div>
+<div class="sidebar-overlay"></div>
+<div class="sidebar">
+<div class="sidebar-title">ナビゲーション <button class="sidebar-close">&times;</button></div>
+<div class="sidebar-section">
+<div class="sidebar-heading">BASICS (言語共通概念)</div>
+<a class="sidebar-link" href="01_variables.html"><span class="check">✓</span>1. 変数</a>
+<a class="sidebar-link" href="02_functions.html"><span class="check">✓</span>2. 関数</a>
+<a class="sidebar-link" href="03_parameters.html"><span class="check">✓</span>3. 引数</a>
+<a class="sidebar-link current" href="04_conditionals.html"><span class="check">✓</span>4. 条件分岐</a>
+<a class="sidebar-link" href="05_loops.html"><span class="check">✓</span>5. 繰り返し</a>
+<a class="sidebar-link" href="06_lists.html"><span class="check">✓</span>6. リスト</a>
+<a class="sidebar-link" href="07_dictionaries.html"><span class="check">✓</span>7. 辞書</a>
+<a class="sidebar-link" href="08_strings_numbers.html"><span class="check">✓</span>8. 文字列と数値</a>
+<a class="sidebar-link" href="09_boolean_none.html"><span class="check">✓</span>9. 真偽値とNone</a>
+<a class="sidebar-link" href="10_imports.html"><span class="check">✓</span>10. インポート</a>
+<a class="sidebar-link" href="11_classes.html"><span class="check">✓</span>11. クラス</a>
+<a class="sidebar-link" href="12_methods.html"><span class="check">✓</span>12. メソッド</a>
+<a class="sidebar-link" href="13_try_except.html"><span class="check">✓</span>13. 例外処理</a>
+<a class="sidebar-link" href="14_async_await.html"><span class="check">✓</span>14. 非同期</a>
+<a class="sidebar-link" href="15_type_hints.html"><span class="check">✓</span>15. 型ヒント</a>
+<a class="sidebar-link" href="16_decorators.html"><span class="check">✓</span>16. デコレータ</a>
+<a class="sidebar-link" href="17_context_managers.html"><span class="check">✓</span>17. コンテキスト</a>
+<a class="sidebar-link" href="18_operators.html"><span class="check">✓</span>18. 演算子</a>
+<a class="sidebar-link" href="19_string_operations.html"><span class="check">✓</span>19. 文字列操作</a>
+<a class="sidebar-link" href="20_file_io.html"><span class="check">✓</span>20. ファイル入出力</a>
+</div>
+<div class="sidebar-section">
+<div class="sidebar-heading">SYNTAX (Python固有)</div>
+<a class="sidebar-link" href="../../02_python_syntax/interactive/01_indentation.html"><span class="check">✓</span>1. インデント</a>
+<a class="sidebar-link" href="../../02_python_syntax/interactive/02_fstring.html"><span class="check">✓</span>2. f文字列</a>
+<a class="sidebar-link" href="../../02_python_syntax/interactive/03_list_comprehension.html"><span class="check">✓</span>3. リスト内包表記</a>
+<a class="sidebar-link" href="../../02_python_syntax/interactive/04_with_statement.html"><span class="check">✓</span>4. with文</a>
+<a class="sidebar-link" href="../../02_python_syntax/interactive/05_args_kwargs.html"><span class="check">✓</span>5. *args/**kwargs</a>
+<a class="sidebar-link" href="../../02_python_syntax/interactive/06_init_self.html"><span class="check">✓</span>6. __init__とself</a>
+<a class="sidebar-link" href="../../02_python_syntax/interactive/07_lambda.html"><span class="check">✓</span>7. ラムダ</a>
+<a class="sidebar-link" href="../../02_python_syntax/interactive/08_generators.html"><span class="check">✓</span>8. ジェネレータ</a>
+<a class="sidebar-link" href="../../02_python_syntax/interactive/09_slicing.html"><span class="check">✓</span>9. スライス</a>
+<a class="sidebar-link" href="../../02_python_syntax/interactive/10_exceptions_custom.html"><span class="check">✓</span>10. カスタム例外</a>
+</div>
+</div>
+
 </div>
 
 <script>
@@ -387,6 +571,94 @@ document.addEventListener('click', function() {
   var allTerms = document.querySelectorAll('.term.active');
   for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
 });
+
+
+
+// === B2: Keyboard shortcuts ===
+document.addEventListener('keydown', function(e) {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (e.key === 'ArrowRight' || e.key === ' ') {
+    e.preventDefault();
+    var btn = document.getElementById('btnStep');
+    if (btn && !btn.disabled) btn.click();
+  } else if (e.key === 'ArrowLeft') {
+    e.preventDefault();
+    if (currentStep > 0) { currentStep--; updateDisplay(); }
+  } else if (e.key === 'r' || e.key === 'R') {
+    if (!e.ctrlKey && !e.metaKey) {
+      e.preventDefault();
+      var btnR = document.getElementById('btnReset');
+      if (btnR) btnR.click();
+    }
+  }
+});
+
+// === A3: Progress tracking ===
+(function() {
+  var path = window.location.pathname;
+  var m = path.match(/\/(\d{2}_\w+)\/interactive\/(\d{2}_\w+)\.html/);
+  if (!m) return;
+  var lessonId = m[1] + '/' + m[2];
+  var key = 'prg_progress';
+  try {
+    var data = JSON.parse(localStorage.getItem(key) || '{}');
+    data[lessonId] = Date.now();
+    localStorage.setItem(key, JSON.stringify(data));
+  } catch(e) {}
+})();
+
+// === B1: Sidebar toggle ===
+var sidebarOverlay = document.querySelector('.sidebar-overlay');
+var sidebar = document.querySelector('.sidebar');
+document.querySelector('.btn-hamburger').addEventListener('click', function() {
+  sidebarOverlay.classList.add('open');
+  sidebar.classList.add('open');
+  // Mark visited links
+  try {
+    var data = JSON.parse(localStorage.getItem('prg_progress') || '{}');
+    var links = sidebar.querySelectorAll('.sidebar-link');
+    for (var i = 0; i < links.length; i++) {
+      var href = links[i].getAttribute('href');
+      if (!href) continue;
+      var lm = href.match(/\/(\d{2}_\w+)\/interactive\/(\d{2}_\w+)\.html/);
+      if (lm && data[lm[1] + '/' + lm[2]]) links[i].classList.add('visited');
+    }
+  } catch(e) {}
+});
+function closeSidebar() {
+  sidebarOverlay.classList.remove('open');
+  sidebar.classList.remove('open');
+}
+if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
+var sidebarCloseBtn = document.querySelector('.sidebar-close');
+if (sidebarCloseBtn) sidebarCloseBtn.addEventListener('click', closeSidebar);
+
+// === C3: Theme toggle ===
+(function() {
+  var saved = localStorage.getItem('prg_theme');
+  if (saved === 'light') document.body.classList.add('light');
+  var toggle = document.querySelector('.theme-toggle');
+  if (toggle) toggle.addEventListener('click', function() {
+    document.body.classList.toggle('light');
+    var isLight = document.body.classList.contains('light');
+    toggle.textContent = isLight ? '\u2600' : '\u263E';
+    localStorage.setItem('prg_theme', isLight ? 'light' : 'dark');
+  });
+  // Set initial icon
+  if (toggle) toggle.textContent = document.body.classList.contains('light') ? '\u2600' : '\u263E';
+})();
+
+// === C1: Help toggle ===
+var helpBtns = document.querySelectorAll('.btn-help');
+for (var h = 0; h < helpBtns.length; h++) {
+  helpBtns[h].addEventListener('click', function() {
+    var target = this.nextElementSibling;
+    if (target && target.classList.contains('help-content')) {
+      target.classList.toggle('open');
+      this.textContent = target.classList.contains('open') ? '\u2713 わかった！' : '\u2753 わからなかった';
+    }
+  });
+}
 </script>
 </body>
 </html>
