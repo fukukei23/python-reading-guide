@@ -186,8 +186,6 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
   border-bottom-color: var(--accent);
 }
 
-
-
 @media (max-width: 600px) {
   .container { padding: 16px 14px 48px; }
   h1 { font-size: 22px; } h1 span { font-size: 15px; }
@@ -295,43 +293,18 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
   transition: all 0.2s; color: var(--fg-dim); line-height: 1;
 }
 .theme-toggle:hover { border-color: var(--accent); color: var(--fg); }
+
+body.light #term-tooltip {
+  background: #fff;
+  border-color: var(--accent);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15), 0 0 0 1px rgba(124,58,237,0.2);
+}
+
 body.light {
   --bg: #f8f9fa; --bg-raised: #fff; --code-bg: #f1f3f5;
   --accent: #7c3aed; --accent-dim: rgba(124,58,237,0.12);
   --fg: #2d2d3f; --fg-dim: #6b7280; --fg-bright: #1a1a2e;
   --border: #e5e7eb; --warning: #d97706; --success: #059669;
-}
-body.light .term-popup {
-  display: none;
-  position: absolute;
-  bottom: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--bg-raised);
-  border: 1px solid var(--accent);
-  border-radius: 8px;
-  padding: 8px 14px;
-  font-size: 13px;
-  color: var(--fg);
-  line-height: 1.6;
-  white-space: nowrap;
-  z-index: 100;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(124,58,237,0.3);
-  pointer-events: none;
-}
-.term-popup::after {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 6px solid transparent;
-  border-top-color: var(--accent);
-}
-.term:hover .term-popup,
-.term:focus .term-popup,
-.term.show-popup .term-popup {
-  display: block;
 }
 body.light .watch-panel { background: #f1f3f5; }
 body.light .sidebar { background: #fff; border-right-color: #e5e7eb; }
@@ -674,8 +647,6 @@ for (var b = 0; b < revealButtons.length; b++) {
 }
 
 // Term tooltips are now always visible (inline)
-
-
 
 // === B2: Keyboard shortcuts ===
 document.addEventListener('keydown', function(e) {
