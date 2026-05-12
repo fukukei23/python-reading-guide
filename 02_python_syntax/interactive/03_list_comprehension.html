@@ -631,6 +631,28 @@ for (var h = 0; h < helpBtns.length; h++) {
     }
   });
 }
+
+// === Swipe support for stepper ===
+(function() {
+  var panel = document.querySelector('.code-panel');
+  if (!panel) return;
+  var startX = 0, startY = 0;
+  panel.addEventListener('touchstart', function(e) {
+    startX = e.changedTouches[0].screenX;
+    startY = e.changedTouches[0].screenY;
+  }, {passive: true});
+  panel.addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].screenX - startX;
+    var dy = e.changedTouches[0].screenY - startY;
+    if (Math.abs(dx) < 50 || Math.abs(dy) > Math.abs(dx)) return;
+    if (dx < 0) {
+      var btn = document.getElementById('btnStep');
+      if (btn && !btn.disabled) btn.click();
+    } else {
+      if (currentStep > 0) { currentStep--; updateDisplay(); }
+    }
+  }, {passive: true});
+})();
 </script>
 </body>
 </html>
