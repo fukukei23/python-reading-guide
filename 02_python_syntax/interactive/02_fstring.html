@@ -147,16 +147,16 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 .term {
   border-bottom: 1px dashed var(--accent);
   cursor: help;
-  position: relative;
   color: #c4b5fd;
+  transition: color 0.2s;
 }
-.term:hover { color: var(--fg-bright); }
-.term-popup {
+.term:hover, .term:focus { color: var(--fg-bright); }
+.term-popup { display: none; }
+
+/* body-level tooltip — positioned by JS, escapes all overflow/z-index */
+#term-tooltip {
   display: none;
-  position: absolute;
-  bottom: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
+  position: fixed;
   background: var(--bg-raised);
   border: 1px solid var(--accent);
   border-radius: 8px;
@@ -165,11 +165,12 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
   color: var(--fg);
   line-height: 1.6;
   white-space: nowrap;
-  z-index: 100;
+  z-index: 99999;
   box-shadow: 0 8px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(124,58,237,0.3);
   pointer-events: none;
+  max-width: 320px;
 }
-.term-popup::after {
+#term-tooltip::after {
   content: '';
   position: absolute;
   top: 100%;
@@ -178,10 +179,11 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
   border: 6px solid transparent;
   border-top-color: var(--accent);
 }
-.term:hover .term-popup,
-.term:focus .term-popup,
-.term.show-popup .term-popup {
-  display: block;
+#term-tooltip.below::after {
+  top: auto;
+  bottom: 100%;
+  border-top-color: transparent;
+  border-bottom-color: var(--accent);
 }
 
 
@@ -190,7 +192,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
   .container { padding: 16px 14px 48px; }
   h1 { font-size: 22px; } h1 span { font-size: 15px; }
   .line-content { font-size: 12px; } .line-num { width: 36px; }
-  .term-popup { white-space: normal; min-width: 200px; max-width: 280px; font-size: 12px; }
+    #term-tooltip { white-space: normal; min-width: 200px; max-width: 280px; font-size: 12px; }
 }
 
 /* === A1: Line comments === */
@@ -802,18 +804,58 @@ document.addEventListener('click', function(e) {
 });
 
 </script>
+<script>
+// term popup — body-level tooltip (escapes overflow/z-index)
+(function(){
+  var tip = document.createElement('div');
+  tip.id = 'term-tooltip';
+  document.body.appendChild(tip);
+  var currentTerm = null;
 
-// term popup click toggle (mobile support)
-document.querySelectorAll('.term').forEach(function(t){
-  t.setAttribute('tabindex','0');
-  t.setAttribute('role','button');
-  t.addEventListener('click', function(e){
-    e.stopPropagation();
-    document.querySelectorAll('.term.show-popup').forEach(function(o){ if(o!==t) o.classList.remove('show-popup'); });
-    t.classList.toggle('show-popup');
+  function showTip(term) {
+    var popup = term.querySelector('.term-popup');
+    if (!popup) return;
+    tip.textContent = popup.textContent;
+    tip.style.display = 'block';
+    tip.classList.remove('below');
+
+    // position: prefer above, fallback below
+    var r = term.getBoundingClientRect();
+    var tw = tip.offsetWidth;
+    var th = tip.offsetHeight;
+    var left = r.left + r.width / 2 - tw / 2;
+    left = Math.max(8, Math.min(left, window.innerWidth - tw - 8));
+    var top = r.top - th - 10;
+    if (top < 8) {
+      top = r.bottom + 10;
+      tip.classList.add('below');
+    }
+    tip.style.left = left + 'px';
+    tip.style.top = top + 'px';
+    currentTerm = term;
+  }
+
+  function hideTip() {
+    tip.style.display = 'none';
+    currentTerm = null;
+  }
+
+  document.querySelectorAll('.term').forEach(function(t){
+    t.setAttribute('tabindex', '0');
+    t.addEventListener('mouseenter', function(){ showTip(t); });
+    t.addEventListener('mouseleave', function(){ hideTip(); });
+    t.addEventListener('focus', function(){ showTip(t); });
+    t.addEventListener('blur', function(){ hideTip(); });
+    // mobile: click toggle
+    t.addEventListener('click', function(e){
+      e.stopPropagation();
+      if (currentTerm === t) { hideTip(); }
+      else { showTip(t); }
+    });
   });
-});
-document.addEventListener('click', function(){ document.querySelectorAll('.term.show-popup').forEach(function(t){ t.classList.remove('show-popup'); }); });
-
+  document.addEventListener('click', function(){ hideTip(); });
+  window.addEventListener('scroll', function(){ if (currentTerm) showTip(currentTerm); }, {passive:true});
+})();
+</script>
 </body>
 </html>
