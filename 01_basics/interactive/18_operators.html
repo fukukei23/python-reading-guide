@@ -172,7 +172,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <div class="concept-card">
     <div class="concept-label">CONCEPT</div>
-    <p>値を比べたり、条件を組み合わせたりする記号のことです。「AとBは同じか？」「AまたはB」といった条件を書くときに使います。</p>
+    <p><span class="term">演算子<span class="term-popup">operator（オペレーター）。計算や比較の記号</span></span>は、値を比べたり、条件を組み合わせたりする記号です。「AとBは同じか？」「AまたはB」といった条件を書くときに使います。</p>
   </div>
 
   <section style="margin-bottom:40px;">
@@ -215,7 +215,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <div class="key-point">
     <div class="kp-label">KEY POINT</div>
-    <p><code>==</code> は「等しいか？」の比較。<code>!=</code> は「等しくないか？」。<code>and</code> は両方 True、<code>or</code> はどちらか True。<code>in</code> は「含まれているか」。<code>is</code> は「同じオブジェクトか」の比較（<code>is None</code> チェックで使う）。</p>
+    <p><span class="term">演算子<span class="term-popup">operator（オペレーター）。計算や比較の記号</span></span>では、<code>==</code> は「等しいか？」の比較。<code>!=</code> は「等しくないか？」。<code>and</code> は両方 True、<code>or</code> はどちらか True。<code>in</code> は「含まれているか」。<code>is</code> は「同じオブジェクトか」の比較（<code>is None</code> チェックで使う）。</p>
   </div>
 
   <div class="section-title"><span class="icon">&#10067;</span> 確認問題</div>
@@ -230,14 +230,14 @@ if role == "admin" and active:
 else:
     print("アクセス拒否")</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="1">解答を見る</button></div>
-      <div class="quiz-answer" data-answer="1"><div class="quiz-answer-inner">「管理者メニューを表示」と表示されます。role == "admin" が True、active も True なので、and の条件を両方満たします。</div></div>
+      <div class="quiz-answer" data-answer="1"><div class="quiz-answer-inner">「管理者メニューを表示」と表示されます。role == "admin" が True、active も True なので、<span class="term">is_big<span class="term-popup">大きいかどうか（英: is=is、big=大きい）</span></span>と <span class="term">is_gold<span class="term-popup">ゴールド会員か（英: is=is、gold=金）</span></span> の <span class="term">演算子<span class="term-popup">operator（オペレーター）。計算や比較の記号</span></span>で両方満たします。</div></div>
     </div>
     <div class="quiz-card" data-quiz="2">
       <div class="quiz-header"><span class="quiz-num">2</span><span class="quiz-title">result には何が入りますか？</span></div>
       <div class="quiz-code">price = 800
 result = "送料無料" if price &gt;= 1000 else "送料500円"</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="2">解答を見る</button></div>
-      <div class="quiz-answer" data-answer="2"><div class="quiz-answer-inner">result には "送料500円" が入ります。price(800) は 1000 以上ではないため、else の "送料500円" が選ばれます。</div></div>
+      <div class="quiz-answer" data-answer="2"><div class="quiz-answer-inner">result には "送料500円" が入ります。price(800) は 1000 以上ではないため、else の "送料500円" が選ばれ、<span class="term">discount<span class="term-popup">割引（英: discount）</span></span>は適用されません。</div></div>
     </div>
     <div class="quiz-card" data-quiz="3">
       <div class="quiz-header"><span class="quiz-num">3</span><span class="quiz-title">== と is の違いを説明してください</span></div>
@@ -355,20 +355,6 @@ for (var b = 0; b < revealButtons.length; b++) {
 }
 
 // Term tooltip toggle for mobile
-var terms = document.querySelectorAll('.term');
-for (var t = 0; t < terms.length; t++) {
-  terms[t].addEventListener('click', function(e) {
-    e.stopPropagation();
-    var wasActive = this.classList.contains('active');
-    var allTerms = document.querySelectorAll('.term.active');
-    for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
-    if (!wasActive) this.classList.add('active');
-  });
-}
-document.addEventListener('click', function() {
-  var allTerms = document.querySelectorAll('.term.active');
-  for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
-});
 var terms = document.querySelectorAll('.term');
 for (var t = 0; t < terms.length; t++) {
   terms[t].addEventListener('click', function(e) {

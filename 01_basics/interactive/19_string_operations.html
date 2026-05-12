@@ -172,7 +172,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <div class="concept-card">
     <div class="concept-label">CONCEPT</div>
-    <p>文字を組み立てたり、分割したりする方法です。LINEbotのメッセージ作成や、CSVデータの解析などでよく使います。</p>
+    <p>文字を組み立てたり、分割したりする方法です。<span class="term">order_id<span class="term-popup">注文ID（英: order=注文、id=識別子）</span></span>や<span class="term">message<span class="term-popup">メッセージ（英: message）</span></span>の作成、<span class="term">csv_line<span class="term-popup">CSVの行（英: csv_line）</span></span>の解析などで使います。LINEbotのメッセージ作成や、CSVデータの解析などでよく使います。</p>
   </div>
 
   <section style="margin-bottom:40px;">
@@ -205,7 +205,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
     <tbody>
       <tr><td><code>f"合計: ¥{total:,}"</code></td><td>f-string: 変数を文字列に埋め込む。{total:,} はカンマ区切り</td></tr>
       <tr><td><code>", ".join(items)</code></td><td>リストの要素を「, 」でつなぐ</td></tr>
-      <tr><td><code>csv_line.split(",")</code></td><td>文字列を「,」で分割してリストにする</td></tr>
+      <tr><td><code>csv_line.split(",")</code></td><td><span class="term">csv_line<span class="term-popup">CSVの行（英: csv_line）</span></span>を「,」で分割して<span class="term">fields<span class="term-popup">フィールド（英: fields、欄）</span></span>のリストにする</td></tr>
       <tr><td><code>text.strip()</code></td><td>前後の余分な空白を削る</td></tr>
       <tr><td><code>text.replace("A", "B")</code></td><td>「A」を「B」に置き換える</td></tr>
     </tbody>
@@ -233,7 +233,7 @@ tax = 1.1
 total = int(price * tax)
 formatted = f"税込: ¥{total:,}"</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="2">解答を見る</button></div>
-      <div class="quiz-answer" data-answer="2"><div class="quiz-answer-inner">formatted には "税込: ¥2,178" が入ります。1980 * 1.1 = 2178.0 → int で 2178 → カンマ区切りで 2,178 になります。</div></div>
+      <div class="quiz-answer" data-answer="2"><div class="quiz-answer-inner"><span class="term">formatted<span class="term-popup">フォーマット済み（英: formatted）</span></span>には "税込: ¥2,178" が入ります。1980 * 1.1 = 2178.0 → int で 2178 → カンマ区切りで 2,178 になります。</div></div>
     </div>
     <div class="quiz-card" data-quiz="3">
       <div class="quiz-header"><span class="quiz-num">3</span><span class="quiz-title">このコードは何を表示しますか？</span></div>
@@ -350,20 +350,6 @@ for (var b = 0; b < revealButtons.length; b++) {
 }
 
 // Term tooltip toggle for mobile
-var terms = document.querySelectorAll('.term');
-for (var t = 0; t < terms.length; t++) {
-  terms[t].addEventListener('click', function(e) {
-    e.stopPropagation();
-    var wasActive = this.classList.contains('active');
-    var allTerms = document.querySelectorAll('.term.active');
-    for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
-    if (!wasActive) this.classList.add('active');
-  });
-}
-document.addEventListener('click', function() {
-  var allTerms = document.querySelectorAll('.term.active');
-  for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
-});
 var terms = document.querySelectorAll('.term');
 for (var t = 0; t < terms.length; t++) {
   terms[t].addEventListener('click', function(e) {

@@ -172,7 +172,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <div class="concept-card">
     <div class="concept-label">CONCEPT</div>
-    <p>変数や関数に「このデータは文字です」「この関数は数値を返します」という注釈をつける仕組みです。名前にふりがなをつけるようなもので、コードを読みやすくします。</p>
+    <p><span class="term">型ヒント<span class="term-popup">type hint（タイプヒント）。変数や関数の型を注釈する</span></span>は、変数や関数に「このデータは文字です」「この関数は数値を返します」という注釈をつける仕組みです。名前にふりがなをつけるようなもので、コードを読みやすくします。</p>
   </div>
 
   <section style="margin-bottom:40px;">
@@ -210,7 +210,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <div class="key-point">
     <div class="kp-label">KEY POINT</div>
-    <p><code>price: int</code> は「priceという変数は整数（int）です」という注釈。<code>-&gt; int</code> は「この関数は整数を返します」という注釈。<code>Optional[dict]</code> は dictかNoneのどちらか。<code>list[str]</code> は文字列のリスト。</p>
+    <p><span class="term">型ヒント<span class="term-popup">type hint（タイプヒント）。変数や関数の型を注釈する</span></span>では、<code>price: int</code> は「priceという変数は整数（int）です」という注釈。<code>-&gt; int</code> は「この関数は整数を返します」という注釈。<code>Optional[dict]</code> は dictかNoneのどちらか。<code>list[str]</code> は文字列のリスト。</p>
   </div>
 
   <div class="section-title"><span class="icon">&#10067;</span> 確認問題</div>
@@ -219,7 +219,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
       <div class="quiz-header"><span class="quiz-num">1</span><span class="quiz-title">この関数は何を受け取り何を返すか</span></div>
       <div class="quiz-code">def get_product_name(product_id: str) -> str:\n    products = {"A001": "りんご", "A002": "みかん"}\n    return products[product_id]</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="1">解答を見る</button></div>
-      <div class="quiz-answer" data-answer="1"><div class="quiz-answer-inner">product_id として文字列（str）を受け取り、文字列（str）を返します。例: get_product_name("A001") は "りんご" を返します。</div></div>
+      <div class="quiz-answer" data-answer="1"><div class="quiz-answer-inner">product_id として文字列（str）を受け取り、文字列（str）を返します。例: get_product_name("A001") は "りんご" を返します。<span class="term">formatted<span class="term-popup">フォーマット済み（英: formatted）</span></span>として扱われます。</div></div>
     </div>
     <div class="quiz-card" data-quiz="2">
       <div class="quiz-header"><span class="quiz-num">2</span><span class="quiz-title">Optional[dict] はどういう意味か</span></div>
@@ -337,20 +337,6 @@ for (var b = 0; b < revealButtons.length; b++) {
 }
 
 // Term tooltip toggle for mobile
-var terms = document.querySelectorAll('.term');
-for (var t = 0; t < terms.length; t++) {
-  terms[t].addEventListener('click', function(e) {
-    e.stopPropagation();
-    var wasActive = this.classList.contains('active');
-    var allTerms = document.querySelectorAll('.term.active');
-    for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
-    if (!wasActive) this.classList.add('active');
-  });
-}
-document.addEventListener('click', function() {
-  var allTerms = document.querySelectorAll('.term.active');
-  for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
-});
 var terms = document.querySelectorAll('.term');
 for (var t = 0; t < terms.length; t++) {
   terms[t].addEventListener('click', function(e) {

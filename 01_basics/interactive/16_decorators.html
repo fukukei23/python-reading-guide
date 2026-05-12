@@ -172,7 +172,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <div class="concept-card">
     <div class="concept-label">CONCEPT</div>
-    <p>関数に「追加機能」をつける仕組みです。スマホのケースをつけるようなもので、元の関数を変えずに機能を追加できます。</p>
+    <p><span class="term">デコレータ<span class="term-popup">decorator（デコレータ）。関数を包んで機能を追加する</span></span>は、関数に「追加機能」をつける仕組みです。スマホのケースをつけるようなもので、元の関数を変えずに機能を追加できます。</p>
   </div>
 
   <section style="margin-bottom:40px;">
@@ -202,8 +202,8 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
   <table class="guide-table">
     <thead><tr><th>コード</th><th>読み方</th></tr></thead>
     <tbody>
-      <tr><td><code>@timer</code></td><td>この関数に timer という追加機能をつけて、という宣言</td></tr>
-      <tr><td><code>def process_orders(orders):</code></td><td>元の関数の定義</td></tr>
+      <tr><td><code>@timer</code></td><td>この関数に <span class="term">timer<span class="term-popup">タイマー（英: timer）</span></span>という追加機能をつけて、という宣言</td></tr>
+      <tr><td><code>def process_orders(orders):</code></td><td>元の関数 <span class="term">process_orders<span class="term-popup">注文を処理する（英: process=処理、orders=注文）</span></span> の定義</td></tr>
       <tr><td><code>process_orders = timer(process_orders)</code></td><td>@timer は実質的にこれと同じ意味</td></tr>
       <tr><td><code>def wrapper(*args, **kwargs):</code></td><td>デコレータの内部で動くラッパー関数</td></tr>
     </tbody>
@@ -233,7 +233,7 @@ def process_orders(orders):
     total = sum(order["price"] for order in orders)
     return total</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="2">解答を見る</button></div>
-      <div class="quiz-answer" data-answer="2"><div class="quiz-answer-inner">関数の実行時間が自動で計測され、「process_orders: X.XX秒」と表示されます。元の関数の実行結果はそのまま返されます。</div></div>
+      <div class="quiz-answer" data-answer="2"><div class="quiz-answer-inner">関数の実行時間が自動で計測され、「<span class="term">process_orders<span class="term-popup">注文を処理する（英: process=処理、orders=注文）</span></span>: X.XX秒」と表示されます。元の関数の実行結果はそのまま返されます。</div></div>
     </div>
     <div class="quiz-card" data-quiz="3">
       <div class="quiz-header"><span class="quiz-num">3</span><span class="quiz-title">@app.route("/api/orders") は何を意味していますか？</span></div>
@@ -349,20 +349,6 @@ for (var b = 0; b < revealButtons.length; b++) {
 }
 
 // Term tooltip toggle for mobile
-var terms = document.querySelectorAll('.term');
-for (var t = 0; t < terms.length; t++) {
-  terms[t].addEventListener('click', function(e) {
-    e.stopPropagation();
-    var wasActive = this.classList.contains('active');
-    var allTerms = document.querySelectorAll('.term.active');
-    for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
-    if (!wasActive) this.classList.add('active');
-  });
-}
-document.addEventListener('click', function() {
-  var allTerms = document.querySelectorAll('.term.active');
-  for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
-});
 var terms = document.querySelectorAll('.term');
 for (var t = 0; t < terms.length; t++) {
   terms[t].addEventListener('click', function(e) {

@@ -172,7 +172,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <div class="concept-card">
     <div class="concept-label">CONCEPT</div>
-    <p>「使い始め」と「使い終わり」を自動で管理する仕組みです。電気をつけて部屋に入り、出るときに消すのを自動でやってくれるスイッチのようなものです。</p>
+    <p><span class="term">コンテキストマネージャ<span class="term-popup">context manager。with文で使う、リソースの自動管理</span></span>は、「使い始め」と「使い終わり」を自動で管理する仕組みです。電気をつけて部屋に入り、出るときに消すのを自動でやってくれるスイッチのようなものです。</p>
   </div>
 
   <section style="margin-bottom:40px;">
@@ -202,8 +202,8 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
   <table class="guide-table">
     <thead><tr><th>コード</th><th>読み方</th></tr></thead>
     <tbody>
-      <tr><td><code>with open(...) as f:</code></td><td>ファイルを開いて、f という名前で使う</td></tr>
-      <tr><td><code>f.write("テキスト")</code></td><td>ファイルに書き込む</td></tr>
+      <tr><td><code>with open(...) as f:</code></td><td>ファイルを開いて、<span class="term">f<span class="term-popup">ファイルオブジェクト（英: file）</span></span> という名前で使う</td></tr>
+      <tr><td><code>f.write("テキスト")</code></td><td><span class="term">f<span class="term-popup">ファイルオブジェクト（英: file）</span></span>に書き込む</td></tr>
       <tr><td><code>with sqlite3.connect(...) as conn:</code></td><td>DB接続を開いて、conn という名前で使う</td></tr>
       <tr><td><code># インデントを抜けると自動閉じる</code></td><td>with ブロックを抜けると自動的に後処理が実行される</td></tr>
     </tbody>
@@ -211,7 +211,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <div class="key-point">
     <div class="kp-label">KEY POINT</div>
-    <p><code>with</code> = 「このブロックの間だけリソースを使う」という宣言。<code>as f</code> = 開いたファイルを <code>f</code> という名前で使う。インデントを抜けると自動的に後処理（ファイルを閉じる等）が実行される。</p>
+    <p><span class="term">コンテキストマネージャ<span class="term-popup">context manager。with文で使う、リソースの自動管理</span></span>では、<code>with</code> = 「このブロックの間だけリソースを使う」という宣言。<code>as f</code> = 開いたファイルを <code>f</code> という名前で使う。インデントを抜けると自動的に後処理（ファイルを閉じる等）が実行される。</p>
   </div>
 
   <div class="section-title"><span class="icon">&#10067;</span> 確認問題</div>
@@ -221,7 +221,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
       <div class="quiz-code">with open("log.txt", "w") as f:
     f.write("アクセスログ: 12:00")</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="1">解答を見る</button></div>
-      <div class="quiz-answer" data-answer="1"><div class="quiz-answer-inner">ファイルが自動的に閉じられます。with ブロックを抜けると自動的に後処理（close）が実行されるのがコンテキストマネージャの役割です。</div></div>
+      <div class="quiz-answer" data-answer="1"><div class="quiz-answer-inner">ファイルが自動的に閉じられます。with ブロックを抜けると自動的に後処理（close）が実行されるのが<span class="term">コンテキストマネージャ<span class="term-popup">context manager。with文で使う、リソースの自動管理</span></span>の役割です。</div></div>
     </div>
     <div class="quiz-card" data-quiz="2">
       <div class="quiz-header"><span class="quiz-num">2</span><span class="quiz-title">with 文を使わずにファイルを開いた場合、何を自分でやる必要がありますか？</span></div>
@@ -349,20 +349,6 @@ for (var b = 0; b < revealButtons.length; b++) {
 }
 
 // Term tooltip toggle for mobile
-var terms = document.querySelectorAll('.term');
-for (var t = 0; t < terms.length; t++) {
-  terms[t].addEventListener('click', function(e) {
-    e.stopPropagation();
-    var wasActive = this.classList.contains('active');
-    var allTerms = document.querySelectorAll('.term.active');
-    for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
-    if (!wasActive) this.classList.add('active');
-  });
-}
-document.addEventListener('click', function() {
-  var allTerms = document.querySelectorAll('.term.active');
-  for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
-});
 var terms = document.querySelectorAll('.term');
 for (var t = 0; t < terms.length; t++) {
   terms[t].addEventListener('click', function(e) {

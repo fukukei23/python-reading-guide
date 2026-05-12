@@ -172,7 +172,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <div class="concept-card">
     <div class="concept-label">CONCEPT</div>
-    <p>プログラムがエラーで止まらないようにする仕組みです。「もしここで失敗したら、こう対応する」という保険のようなものです。車のシートベルトのような役割です。</p>
+    <p><span class="term">例外処理<span class="term-popup">exception handling（エクセプション）。エラーの捕捉</span></span>は、プログラムがエラーで止まらないようにする仕組みです。「もしここで失敗したら、こう対応する」という保険のようなものです。車のシートベルトのような役割です。</p>
   </div>
 
   <section style="margin-bottom:40px;">
@@ -212,7 +212,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <div class="key-point">
     <div class="kp-label">KEY POINT</div>
-    <p><code>try</code> は「試しに実行する」範囲の開始。<code>except</code> は「もしエラーが起きたら」の対処法。<code>finally</code> は成功しても失敗しても必ず最後に実行される。エラーの種類ごとに処理を分けられる。</p>
+    <p><span class="term">例外処理<span class="term-popup">exception handling（エクセプション）。エラーの捕捉</span></span>では、<code>try</code> は「試しに実行する」範囲の開始。<code>except</code> は「もしエラーが起きたら」の対処法。<code>finally</code> は成功しても失敗しても必ず最後に実行される。エラーの種類ごとに処理を分けられる。</p>
   </div>
 
   <div class="section-title"><span class="icon">&#10067;</span> 確認問題</div>
@@ -225,7 +225,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
     </div>
     <div class="quiz-card" data-quiz="2">
       <div class="quiz-header"><span class="quiz-num">2</span><span class="quiz-title">load_user_config("missing.json") の結果は？</span></div>
-      <div class="quiz-code"># 例2のコードを参照\ndef load_user_config(filepath):\n    try:\n        with open(filepath, "r") as f:\n            config = json.load(f)\n            return config\n    except FileNotFoundError:\n        print("設定ファイルが見つかりません。初期設定を使います")\n        return {"theme": "light", "lang": "ja"}</div>
+      <div class="quiz-code"># 例2のコードを参照\ndef load_user_config(filepath):\n    try:\n        with open(filepath, "r") as f:\n            <span class="term">config<span class="term-popup">設定（英: configuration）</span></span> = json.load(f)\n            return config\n    except FileNotFoundError:\n        print("設定ファイルが見つかりません。初期設定を使います")\n        return <span class="term">config<span class="term-popup">設定（英: configuration）</span></span>{"theme": "light", "lang": "ja"}</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="2">解答を見る</button></div>
       <div class="quiz-answer" data-answer="2"><div class="quiz-answer-inner">"設定ファイルが見つかりません。初期設定を使います" と表示され、{"theme": "light", "lang": "ja"} が返ります。FileNotFoundError が発生して except ブロックが実行されるためです。</div></div>
     </div>
@@ -341,20 +341,6 @@ for (var b = 0; b < revealButtons.length; b++) {
 }
 
 // Term tooltip toggle for mobile
-var terms = document.querySelectorAll('.term');
-for (var t = 0; t < terms.length; t++) {
-  terms[t].addEventListener('click', function(e) {
-    e.stopPropagation();
-    var wasActive = this.classList.contains('active');
-    var allTerms = document.querySelectorAll('.term.active');
-    for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
-    if (!wasActive) this.classList.add('active');
-  });
-}
-document.addEventListener('click', function() {
-  var allTerms = document.querySelectorAll('.term.active');
-  for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
-});
 var terms = document.querySelectorAll('.term');
 for (var t = 0; t < terms.length; t++) {
   terms[t].addEventListener('click', function(e) {

@@ -172,7 +172,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 
   <div class="concept-card">
     <div class="concept-label">CONCEPT</div>
-    <p>「待っている間に別の作業をする」仕組みです。レストランで料理を注文したあと、料理が来るまでスマホを見るのと同じです。AIの応答を待つ間に別の処理を進められます。</p>
+    <p><span class="term">非同期<span class="term-popup">async（エイシンク）。待ち時間のある処理を効率よく行う仕組み</span></span>は、「待っている間に別の作業をする」仕組みです。レストランで料理を注文したあと、料理が来るまでスマホを見るのと同じです。AIの応答を待つ間に別の処理を進められます。</p>
   </div>
 
   <section style="margin-bottom:40px;">
@@ -203,7 +203,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
   <table class="guide-table">
     <thead><tr><th>コード</th><th>読み方</th></tr></thead>
     <tbody>
-      <tr><td><code>async def ask_ai(...):</code></td><td>この関数は非同期（待ち時間あり）</td></tr>
+      <tr><td><code>async def ask_ai(...):</code></td><td>この関数は<span class="term">非同期<span class="term-popup">async（エイシンク）。待ち時間のある処理を効率よく行う仕組み</span></span>（待ち時間あり）</td></tr>
       <tr><td><code>await asyncio.sleep(2)</code></td><td>ここで結果を待つ（待ってる間に別の作業へ）</td></tr>
       <tr><td><code>asyncio.gather(...)</code></td><td>複数の非同期処理を同時に実行する</td></tr>
       <tr><td><code>asyncio.run(main())</code></td><td>非同期プログラムを起動する</td></tr>
@@ -221,7 +221,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
       <div class="quiz-header"><span class="quiz-num">1</span><span class="quiz-title">await asyncio.sleep(3) は何を意味しているか</span></div>
       <div class="quiz-code">async def check_inventory(item_id):\n    await asyncio.sleep(3)\n    return {"item_id": item_id, "stock": 10}</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="1">解答を見る</button></div>
-      <div class="quiz-answer" data-answer="1"><div class="quiz-answer-inner">「ここで3秒間待つ」という意味です。ただし、await があるので待っている間に他の処理（別のチェック等）を進めることができます。sleepが終わったら次の return 文が実行されます。</div></div>
+      <div class="quiz-answer" data-answer="1"><div class="quiz-answer-inner">「ここで3秒間待つ」という意味です。ただし、await があるので待っている間に他の処理（別のチェック等）を進めることができます。sleepが終わったら次の return 文が実行され、<span class="term">results<span class="term-popup">結果（英: results、複数形）</span></span>が返ります。</div></div>
     </div>
     <div class="quiz-card" data-quiz="2">
       <div class="quiz-header"><span class="quiz-num">2</span><span class="quiz-title">asyncio.gather() のメリットは？</span></div>
@@ -230,9 +230,9 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
     </div>
     <div class="quiz-card" data-quiz="3">
       <div class="quiz-header"><span class="quiz-num">3</span><span class="quiz-title">async と await の役割を説明してください</span></div>
-      <div class="quiz-code">async def notify(user_id, message):\n    await send_push_notification(user_id, message)\n    print("通知完了")</div>
+      <div class="quiz-code">async def notify(user_id, <span class="term">message<span class="term-popup">メッセージ（英: message）</span></span>):\n    await send_push_notification(user_id, message)\n    print("通知完了")</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="3">解答を見る</button></div>
-      <div class="quiz-answer" data-answer="3"><div class="quiz-answer-inner">async は「この関数は非同期（待ち時間がある）」と宣言するキーワード。await は「ここで結果を待つ」という合図で、待っている間に他の処理に切り替えられます。</div></div>
+      <div class="quiz-answer" data-answer="3"><div class="quiz-answer-inner"><span class="term">非同期<span class="term-popup">async（エイシンク）。待ち時間のある処理を効率よく行う仕組み</span></span>では、async は「この関数は非同期（待ち時間がある）」と宣言するキーワード。await は「ここで結果を待つ」という合図で、待っている間に他の処理に切り替えられます。</div></div>
     </div>
   </div>
 
@@ -341,20 +341,6 @@ for (var b = 0; b < revealButtons.length; b++) {
 }
 
 // Term tooltip toggle for mobile
-var terms = document.querySelectorAll('.term');
-for (var t = 0; t < terms.length; t++) {
-  terms[t].addEventListener('click', function(e) {
-    e.stopPropagation();
-    var wasActive = this.classList.contains('active');
-    var allTerms = document.querySelectorAll('.term.active');
-    for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
-    if (!wasActive) this.classList.add('active');
-  });
-}
-document.addEventListener('click', function() {
-  var allTerms = document.querySelectorAll('.term.active');
-  for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
-});
 var terms = document.querySelectorAll('.term');
 for (var t = 0; t < terms.length; t++) {
   terms[t].addEventListener('click', function(e) {
