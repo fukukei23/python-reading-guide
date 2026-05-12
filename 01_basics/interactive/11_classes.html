@@ -123,7 +123,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 .quiz-header { display: flex; align-items: center; gap: 10px; padding: 16px 20px 12px; }
 .quiz-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: var(--accent); color: #fff; font-size: 13px; font-weight: 700; border-radius: 50%; }
 .quiz-title { font-size: 15px; font-weight: 600; color: var(--fg-bright); }
-.quiz-code { margin: 0 20px; background: var(--code-bg); border-radius: 6px; padding: 14px 18px; font-family: var(--font-mono); font-size: 13px; line-height: 1.8; overflow-x: auto; }
+.quiz-code { white-space: pre-wrap; margin: 0 20px; background: var(--code-bg); border-radius: 6px; padding: 14px 18px; font-family: var(--font-mono); font-size: 13px; line-height: 1.8; overflow-x: auto; }
 .quiz-actions { padding: 14px 20px 16px; }
 .btn-reveal {
   display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px;
@@ -450,19 +450,33 @@ body.light .cheat-section { background: #f8f9fa; }
   <div class="quiz-section">
     <div class="quiz-card" data-quiz="1">
       <div class="quiz-header"><span class="quiz-num">1</span><span class="quiz-title">このコードは何をしているか説明してください</span></div>
-      <div class="quiz-code">class Customer:\n    def __init__(self, email):\n        self.email = email\n        self.points = 0</div>
+      <div class="quiz-code">class Customer:
+    def __init__(self, email):
+        self.email = email
+        self.points = 0</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="1">解答を見る</button></div>
       <div class="quiz-answer" data-answer="1"><div class="quiz-answer-inner">Customer という設計図を定義しています。新しい顧客を作ると email と points（初期値0）が設定されます。例: <code>customer = Customer("test@example.com")</code></div></div>
     </div>
     <div class="quiz-card" data-quiz="2">
       <div class="quiz-header"><span class="quiz-num">2</span><span class="quiz-title">何が表示されるか答えてください</span></div>
-      <div class="quiz-code">class Calculator:\n    def __init__(self):\n        self.result = 0\n    def add(self, value):\n        self.result += value\n\ncalc = Calculator()\ncalc.add(5)\ncalc.add(3)\nprint(calc.result)</div>
+      <div class="quiz-code">class Calculator:
+    def __init__(self):
+        self.result = 0
+    def add(self, value):
+        self.result += value
+
+calc = Calculator()
+calc.add(5)
+calc.add(3)
+print(calc.result)</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="2">解答を見る</button></div>
       <div class="quiz-answer" data-answer="2"><div class="quiz-answer-inner">8 が表示されます。result は 0 から始まり、add(5) で 5 になり、add(3) で 8 になります。</div></div>
     </div>
     <div class="quiz-card" data-quiz="3">
       <div class="quiz-header"><span class="quiz-num">3</span><span class="quiz-title">self は何を指しているか説明してください</span></div>
-      <div class="quiz-code"># 例2のコードを参照\nuser = LineUser("U1234", "田中さん")\nuser.send_message("こんにちは！")</div>
+      <div class="quiz-code"># 例2のコードを参照
+user = LineUser("U1234", "田中さん")
+user.send_message("こんにちは！")</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="3">解答を見る</button></div>
       <div class="quiz-answer" data-answer="3"><div class="quiz-answer-inner">self は「そのインスタンス自身」を指します。例2では user が self に当たり、self.display_name は "田中さん"、self.message_count は呼び出し後に 1 になります。</div></div>
     </div>

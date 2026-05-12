@@ -123,7 +123,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 .quiz-header { display: flex; align-items: center; gap: 10px; padding: 16px 20px 12px; }
 .quiz-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: var(--accent); color: #fff; font-size: 13px; font-weight: 700; border-radius: 50%; }
 .quiz-title { font-size: 15px; font-weight: 600; color: var(--fg-bright); }
-.quiz-code { margin: 0 20px; background: var(--code-bg); border-radius: 6px; padding: 14px 18px; font-family: var(--font-mono); font-size: 13px; line-height: 1.8; overflow-x: auto; }
+.quiz-code { white-space: pre-wrap; margin: 0 20px; background: var(--code-bg); border-radius: 6px; padding: 14px 18px; font-family: var(--font-mono); font-size: 13px; line-height: 1.8; overflow-x: auto; }
 .quiz-actions { padding: 14px 20px 16px; }
 .btn-reveal {
   display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px;
@@ -459,7 +459,8 @@ class MyError(Exception): と書けば独自のエラー型が作れます。
   <div class="quiz-section">
     <div class="quiz-card" data-quiz="1">
       <div class="quiz-header"><span class="quiz-num">1</span><span class="quiz-title">次のコードはどの例外が起きる？</span></div>
-      <div class="quiz-code">data = [1, 2, 3]\nprint(data[5])</div>
+      <div class="quiz-code">data = [1, 2, 3]
+print(data[5])</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="1">解答を見る</button></div>
       <div class="quiz-answer" data-answer="1"><div class="quiz-answer-inner">IndexError です。リストの長さは3なのにインデックス5にアクセスしようとしているため、「範囲外」の<span class="term">例外<span class="term-popup">exception（エクセプション）。エラーの種類</span></span>エラーになります。</div></div>
     </div>
@@ -471,7 +472,9 @@ class MyError(Exception): と書けば独自のエラー型が作れます。
     </div>
     <div class="quiz-card" data-quiz="3">
       <div class="quiz-header"><span class="quiz-num">3</span><span class="quiz-title">raise の役割は何？</span></div>
-      <div class="quiz-code">age = 15\nif age < 18:\n    raise ValueError("18歳未満は登録できません")</div>
+      <div class="quiz-code">age = 15
+if age < 18:
+    raise ValueError("18歳未満は登録できません")</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="3">解答を見る</button></div>
       <div class="quiz-answer" data-answer="3"><div class="quiz-answer-inner">raise は自分から例外を発生させる命令です。プログラムの条件に合わないときに、エラーメッセージ付きで<span class="term">例外<span class="term-popup">exception（エクセプション）。エラーの種類</span></span>を出して処理を中断できます。</div></div>
     </div>

@@ -123,7 +123,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 .quiz-header { display: flex; align-items: center; gap: 10px; padding: 16px 20px 12px; }
 .quiz-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: var(--accent); color: #fff; font-size: 13px; font-weight: 700; border-radius: 50%; }
 .quiz-title { font-size: 15px; font-weight: 600; color: var(--fg-bright); }
-.quiz-code { margin: 0 20px; background: var(--code-bg); border-radius: 6px; padding: 14px 18px; font-family: var(--font-mono); font-size: 13px; line-height: 1.8; overflow-x: auto; }
+.quiz-code { white-space: pre-wrap; margin: 0 20px; background: var(--code-bg); border-radius: 6px; padding: 14px 18px; font-family: var(--font-mono); font-size: 13px; line-height: 1.8; overflow-x: auto; }
 .quiz-actions { padding: 14px 20px 16px; }
 .btn-reveal {
   display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px;
@@ -455,19 +455,26 @@ def func(*args) なら func(1,2,3) のようにいくつでも渡せます。
   <div class="quiz-section">
     <div class="quiz-card" data-quiz="1">
       <div class="quiz-header"><span class="quiz-num">1</span><span class="quiz-title">test("a", "b", "c") で args の値は？</span></div>
-      <div class="quiz-code">def test(*args):\n    print(args)\n\ntest("a", "b", "c")</div>
+      <div class="quiz-code">def test(*args):
+    print(args)
+
+test("a", "b", "c")</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="1">解答を見る</button></div>
       <div class="quiz-answer" data-answer="1"><div class="quiz-answer-inner">('a', 'b', 'c') です。3つの引数がタプルとしてまとめられます。<span class="term">args<span class="term-popup">アーグズ — 引数まとめ</span></span> には (&apos;a&apos;, &apos;b&apos;, &apos;c&apos;) が入ります。</div></div>
     </div>
     <div class="quiz-card" data-quiz="2">
       <div class="quiz-header"><span class="quiz-num">2</span><span class="quiz-title">greet(name="花子", mood="元気") で kwargs の値は？</span></div>
-      <div class="quiz-code">def greet(**kwargs):\n    print(kwargs)\n\ngreet(name="花子", mood="元気")</div>
+      <div class="quiz-code">def greet(**kwargs):
+    print(kwargs)
+
+greet(name="花子", mood="元気")</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="2">解答を見る</button></div>
       <div class="quiz-answer" data-answer="2"><div class="quiz-answer-inner">{'name': '花子', 'mood': '元気'} です。名前つき引数が辞書としてまとめられます。</div></div>
     </div>
     <div class="quiz-card" data-quiz="3">
       <div class="quiz-header"><span class="quiz-num">3</span><span class="quiz-title">def wrong(**kwargs, *args) はエラーになる。なぜ？</span></div>
-      <div class="quiz-code">def wrong(**kwargs, *args):\n    pass</div>
+      <div class="quiz-code">def wrong(**kwargs, *args):
+    pass</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="3">解答を見る</button></div>
       <div class="quiz-answer" data-answer="3"><div class="quiz-answer-inner">並び順が間違っているからです。正しい順序は「普通の引数 → <span class="term">*args<span class="term-popup">アーグズ — 引数まとめ（タプル）</span></span> → <span class="term">**kwargs<span class="term-popup">クワーグズ — 名前付き引数まとめ（辞書）</span></span>」です。**kwargs は必ず最後に書きます。</div></div>
     </div>

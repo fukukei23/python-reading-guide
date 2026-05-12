@@ -123,7 +123,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 .quiz-header { display: flex; align-items: center; gap: 10px; padding: 16px 20px 12px; }
 .quiz-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: var(--accent); color: #fff; font-size: 13px; font-weight: 700; border-radius: 50%; }
 .quiz-title { font-size: 15px; font-weight: 600; color: var(--fg-bright); }
-.quiz-code { margin: 0 20px; background: var(--code-bg); border-radius: 6px; padding: 14px 18px; font-family: var(--font-mono); font-size: 13px; line-height: 1.8; overflow-x: auto; }
+.quiz-code { white-space: pre-wrap; margin: 0 20px; background: var(--code-bg); border-radius: 6px; padding: 14px 18px; font-family: var(--font-mono); font-size: 13px; line-height: 1.8; overflow-x: auto; }
 .quiz-actions { padding: 14px 20px 16px; }
 .btn-reveal {
   display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px;
@@ -473,19 +473,24 @@ print(prices["りんご"])  # 150</div>
   <div class="quiz-section">
     <div class="quiz-card" data-quiz="1">
       <div class="quiz-header"><span class="quiz-num">1</span><span class="quiz-title">x に入る値は何ですか？</span></div>
-      <div class="quiz-code">animals = ["犬", "猫", "鳥", "魚"]\nx = animals[2]</div>
+      <div class="quiz-code">animals = ["犬", "猫", "鳥", "魚"]
+x = animals[2]</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="1">解答を見る</button></div>
       <div class="quiz-answer" data-answer="1"><div class="quiz-answer-inner">x には "鳥" が入ります。インデックスは0から始まるので、[2] は3番目の要素です。</div></div>
     </div>
     <div class="quiz-card" data-quiz="2">
       <div class="quiz-header"><span class="quiz-num">2</span><span class="quiz-title">実行後の cart の中身はどうなりますか？</span></div>
-      <div class="quiz-code">cart = ["りんご", "バナナ"]\ncart.append("みかん")\ncart.remove("バナナ")</div>
+      <div class="quiz-code">cart = ["りんご", "バナナ"]
+cart.append("みかん")
+cart.remove("バナナ")</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="2">解答を見る</button></div>
       <div class="quiz-answer" data-answer="2"><div class="quiz-answer-inner"><span class="term">cart<span class="term-popup">カート — 買い物かご</span></span> は ["りんご", "みかん"] になります。"みかん" を追加した後、"バナナ" を削除します。</div></div>
     </div>
     <div class="quiz-card" data-quiz="3">
       <div class="quiz-header"><span class="quiz-num">3</span><span class="quiz-title">このコードは何を表示しますか？</span></div>
-      <div class="quiz-code">numbers = [10, 20, 30, 40]\nprint(len(numbers))\nprint(numbers[1])</div>
+      <div class="quiz-code">numbers = [10, 20, 30, 40]
+print(len(numbers))
+print(numbers[1])</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="3">解答を見る</button></div>
       <div class="quiz-answer" data-answer="3"><div class="quiz-answer-inner">まず 4（要素数）、次に 20（インデックス[1]の2番目の要素）が表示されます。</div></div>
     </div>

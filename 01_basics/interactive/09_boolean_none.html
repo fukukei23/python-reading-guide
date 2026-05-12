@@ -123,7 +123,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 .quiz-header { display: flex; align-items: center; gap: 10px; padding: 16px 20px 12px; }
 .quiz-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: var(--accent); color: #fff; font-size: 13px; font-weight: 700; border-radius: 50%; }
 .quiz-title { font-size: 15px; font-weight: 600; color: var(--fg-bright); }
-.quiz-code { margin: 0 20px; background: var(--code-bg); border-radius: 6px; padding: 14px 18px; font-family: var(--font-mono); font-size: 13px; line-height: 1.8; overflow-x: auto; }
+.quiz-code { white-space: pre-wrap; margin: 0 20px; background: var(--code-bg); border-radius: 6px; padding: 14px 18px; font-family: var(--font-mono); font-size: 13px; line-height: 1.8; overflow-x: auto; }
 .quiz-actions { padding: 14px 20px 16px; }
 .btn-reveal {
   display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px;
@@ -458,19 +458,31 @@ result = None なら「結果はまだ何もない」という意味になりま
   <div class="quiz-section">
     <div class="quiz-card" data-quiz="1">
       <div class="quiz-header"><span class="quiz-num">1</span><span class="quiz-title">result には何が入りますか？</span></div>
-      <div class="quiz-code">x = 10\nresult = x > 5</div>
+      <div class="quiz-code">x = 10
+result = x > 5</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="1">解答を見る</button></div>
       <div class="quiz-answer" data-answer="1"><div class="quiz-answer-inner">True が入ります。10 > 5 は成り立つので、比較結果は True になります。</div></div>
     </div>
     <div class="quiz-card" data-quiz="2">
       <div class="quiz-header"><span class="quiz-num">2</span><span class="quiz-title">このコードは何を表示しますか？</span></div>
-      <div class="quiz-code">has_ticket = True\nat_venue = False\n\nif has_ticket and at_venue:\n    print("入場できます")\nelse:\n    print("入場できません")</div>
+      <div class="quiz-code">has_ticket = True
+at_venue = False
+
+if has_ticket and at_venue:
+    print("入場できます")
+else:
+    print("入場できません")</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="2">解答を見る</button></div>
       <div class="quiz-answer" data-answer="2"><div class="quiz-answer-inner">"入場できません" と表示されます。and は両方 True である必要がありますが、at_venue が False なので<span class="term">条件分岐<span class="term-popup">コンディショナル — 条件分岐</span></span>を満たしません。</div></div>
     </div>
     <div class="quiz-card" data-quiz="3">
       <div class="quiz-header"><span class="quiz-num">3</span><span class="quiz-title">このコードは何を表示しますか？</span></div>
-      <div class="quiz-code">data = None\n\nif data is None:\n    data = "ディフォルト・バリュー — 省略時の初期値"\n\nprint(data)</div>
+      <div class="quiz-code">data = None
+
+if data is None:
+    data = "ディフォルト・バリュー — 省略時の初期値"
+
+print(data)</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="3">解答を見る</button></div>
       <div class="quiz-answer" data-answer="3"><div class="quiz-answer-inner">"<span class="term">ディフォルト・バリュー — 省略時の初期値<span class="term-popup">default value。引数を省略したときの初期値</span></span>" と表示されます。data が None なので if ブロックが実行され、ディフォルト・バリュー — 省略時の初期値が代入されます。</div></div>
     </div>

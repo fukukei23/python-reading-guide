@@ -123,7 +123,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 .quiz-header { display: flex; align-items: center; gap: 10px; padding: 16px 20px 12px; }
 .quiz-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: var(--accent); color: #fff; font-size: 13px; font-weight: 700; border-radius: 50%; }
 .quiz-title { font-size: 15px; font-weight: 600; color: var(--fg-bright); }
-.quiz-code { margin: 0 20px; background: var(--code-bg); border-radius: 6px; padding: 14px 18px; font-family: var(--font-mono); font-size: 13px; line-height: 1.8; overflow-x: auto; }
+.quiz-code { white-space: pre-wrap; margin: 0 20px; background: var(--code-bg); border-radius: 6px; padding: 14px 18px; font-family: var(--font-mono); font-size: 13px; line-height: 1.8; overflow-x: auto; }
 .quiz-actions { padding: 14px 20px 16px; }
 .btn-reveal {
   display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px;
@@ -456,19 +456,29 @@ body.light .cheat-section { background: #f8f9fa; }
   <div class="quiz-section">
     <div class="quiz-card" data-quiz="1">
       <div class="quiz-header"><span class="quiz-num">1</span><span class="quiz-title">このコードを実行すると、何が表示されますか？</span></div>
-      <div class="quiz-code">def greet():\n    print("おはよう！")\n    print("今日もよろしく！")\n\ngreet()</div>
+      <div class="quiz-code">def greet():
+    print("おはよう！")
+    print("今日もよろしく！")
+
+greet()</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="1">解答を見る</button></div>
       <div class="quiz-answer" data-answer="1"><div class="quiz-answer-inner">「おはよう！」と「今日もよろしく！」の2行が表示されます。greet() を呼び出すと、<span class="term">関数<span class="term-popup">ファンクション — 処理をまとめたブロック</span></span>の中身が上から順に実行されます。</div></div>
     </div>
     <div class="quiz-card" data-quiz="2">
       <div class="quiz-header"><span class="quiz-num">2</span><span class="quiz-title">result には何が入りますか？</span></div>
-      <div class="quiz-code">def double(n):\n    return n * 2\n\nresult = double(5)</div>
+      <div class="quiz-code">def double(n):
+    return n * 2
+
+result = double(5)</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="2">解答を見る</button></div>
       <div class="quiz-answer" data-answer="2"><div class="quiz-answer-inner"><span class="term">result<span class="term-popup">リザルト — 結果</span></span> には 10 が入ります。double(5) は 5 * 2 = 10 を<span class="term">返し<span class="term-popup">リターン・バリュー — 関数からの出力結果</span></span>ます。</div></div>
     </div>
     <div class="quiz-card" data-quiz="3">
       <div class="quiz-header"><span class="quiz-num">3</span><span class="quiz-title">check(3) は何を返しますか？</span></div>
-      <div class="quiz-code">def check(count):\n    if count > 5:\n        return "多い"\n    return "少ない"</div>
+      <div class="quiz-code">def check(count):
+    if count > 5:
+        return "多い"
+    return "少ない"</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="3">解答を見る</button></div>
       <div class="quiz-answer" data-answer="3"><div class="quiz-answer-inner">"少ない" を返します。<span class="term">count<span class="term-popup">カウント — 数</span></span> > 5 は False なので、if ブロックをスキップして最後の return が実行されます。</div></div>
     </div>

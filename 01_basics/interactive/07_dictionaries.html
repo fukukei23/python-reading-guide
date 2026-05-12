@@ -123,7 +123,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 .quiz-header { display: flex; align-items: center; gap: 10px; padding: 16px 20px 12px; }
 .quiz-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: var(--accent); color: #fff; font-size: 13px; font-weight: 700; border-radius: 50%; }
 .quiz-title { font-size: 15px; font-weight: 600; color: var(--fg-bright); }
-.quiz-code { margin: 0 20px; background: var(--code-bg); border-radius: 6px; padding: 14px 18px; font-family: var(--font-mono); font-size: 13px; line-height: 1.8; overflow-x: auto; }
+.quiz-code { white-space: pre-wrap; margin: 0 20px; background: var(--code-bg); border-radius: 6px; padding: 14px 18px; font-family: var(--font-mono); font-size: 13px; line-height: 1.8; overflow-x: auto; }
 .quiz-actions { padding: 14px 20px 16px; }
 .btn-reveal {
   display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px;
@@ -459,19 +459,23 @@ person["名前"] と書けば "田中" がすぐ取り出せます。
   <div class="quiz-section">
     <div class="quiz-card" data-quiz="1">
       <div class="quiz-header"><span class="quiz-num">1</span><span class="quiz-title">x に入る値は何ですか？</span></div>
-      <div class="quiz-code">item = {"id": "A001", "name": "コーヒー", "price": 350}\nx = item["price"]</div>
+      <div class="quiz-code">item = {"id": "A001", "name": "コーヒー", "price": 350}
+x = item["price"]</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="1">解答を見る</button></div>
       <div class="quiz-answer" data-answer="1"><div class="quiz-answer-inner">x には 350 が入ります。キー "<span class="term">price<span class="term-popup">プライス — 価格</span></span>" に対応する値は 350 です。</div></div>
     </div>
     <div class="quiz-card" data-quiz="2">
       <div class="quiz-header"><span class="quiz-num">2</span><span class="quiz-title">実行後の player の中身はどうなりますか？</span></div>
-      <div class="quiz-code">player = {"name": "太郎", "score": 100}\nplayer["score"] = 200\nplayer["level"] = 5</div>
+      <div class="quiz-code">player = {"name": "太郎", "score": 100}
+player["score"] = 200
+player["level"] = 5</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="2">解答を見る</button></div>
       <div class="quiz-answer" data-answer="2"><div class="quiz-answer-inner">player は {"name": "太郎", "score": 200, "level": 5} になります。"score" が 200 に更新され、新しいキー "level" が追加されます。</div></div>
     </div>
     <div class="quiz-card" data-quiz="3">
       <div class="quiz-header"><span class="quiz-num">3</span><span class="quiz-title">このコードは何を表示しますか？</span></div>
-      <div class="quiz-code">book = {"title": "Python入門", "page": 250}\nprint(book.get("author", "不明"))</div>
+      <div class="quiz-code">book = {"title": "Python入門", "page": 250}
+print(book.get("author", "不明"))</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="3">解答を見る</button></div>
       <div class="quiz-answer" data-answer="3"><div class="quiz-answer-inner">"不明" と表示されます。キー "author" は存在しないので、.get() の<span class="term">ディフォルト・バリュー — 省略時の初期値<span class="term-popup">default value。引数を省略したときの初期値</span></span> "不明" が返ります。</div></div>
     </div>

@@ -123,7 +123,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 .quiz-header { display: flex; align-items: center; gap: 10px; padding: 16px 20px 12px; }
 .quiz-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: var(--accent); color: #fff; font-size: 13px; font-weight: 700; border-radius: 50%; }
 .quiz-title { font-size: 15px; font-weight: 600; color: var(--fg-bright); }
-.quiz-code { margin: 0 20px; background: var(--code-bg); border-radius: 6px; padding: 14px 18px; font-family: var(--font-mono); font-size: 13px; line-height: 1.8; overflow-x: auto; }
+.quiz-code { white-space: pre-wrap; margin: 0 20px; background: var(--code-bg); border-radius: 6px; padding: 14px 18px; font-family: var(--font-mono); font-size: 13px; line-height: 1.8; overflow-x: auto; }
 .quiz-actions { padding: 14px 20px 16px; }
 .btn-reveal {
   display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px;
@@ -450,13 +450,34 @@ car.run() なら「車オブジェクトに走れと命令する」イメージ�
   <div class="quiz-section">
     <div class="quiz-card" data-quiz="1">
       <div class="quiz-header"><span class="quiz-num">1</span><span class="quiz-title">agent.ask("天気は？") を実行すると何が起きるか</span></div>
-      <div class="quiz-code">class AIAgent:\n    def __init__(self, name):\n        self.name = name\n        self.history = []\n    def ask(self, question):\n        self.history.append(question)\n        return f"{self.name}: {question}の回答です"\n\nagent = AIAgent("bot")\nresult = agent.ask("天気は？")</div>
+      <div class="quiz-code">class AIAgent:
+    def __init__(self, name):
+        self.name = name
+        self.history = []
+    def ask(self, question):
+        self.history.append(question)
+        return f"{self.name}: {question}の回答です"
+
+agent = AIAgent("bot")
+result = agent.ask("天気は？")</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="1">解答を見る</button></div>
       <div class="quiz-answer" data-answer="1"><div class="quiz-answer-inner">self.history に "天気は？" が追加され、result には "bot: 天気は？の回答です" が返ります。history リストに質問が記録されます。</div></div>
     </div>
     <div class="quiz-card" data-quiz="2">
       <div class="quiz-header"><span class="quiz-num">2</span><span class="quiz-title">何が表示されるか答えてください</span></div>
-      <div class="quiz-code">class Counter:\n    def __init__(self):\n        self.count = 0\n    def increment(self):\n        self.count += 1\n    def show(self):\n        print(f"現在: {self.count}")\n\nc = Counter()\nc.increment()\nc.increment()\nc.increment()\nc.show()</div>
+      <div class="quiz-code">class Counter:
+    def __init__(self):
+        self.count = 0
+    def increment(self):
+        self.count += 1
+    def show(self):
+        print(f"現在: {self.count}")
+
+c = Counter()
+c.increment()
+c.increment()
+c.increment()
+c.show()</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="2">解答を見る</button></div>
       <div class="quiz-answer" data-answer="2"><div class="quiz-answer-inner">"現在: 3" が表示されます。count は 0 から始まり、increment() を3回呼び出すので 3 になります。</div></div>
     </div>

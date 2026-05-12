@@ -123,7 +123,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 .quiz-header { display: flex; align-items: center; gap: 10px; padding: 16px 20px 12px; }
 .quiz-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: var(--accent); color: #fff; font-size: 13px; font-weight: 700; border-radius: 50%; }
 .quiz-title { font-size: 15px; font-weight: 600; color: var(--fg-bright); }
-.quiz-code { margin: 0 20px; background: var(--code-bg); border-radius: 6px; padding: 14px 18px; font-family: var(--font-mono); font-size: 13px; line-height: 1.8; overflow-x: auto; }
+.quiz-code { white-space: pre-wrap; margin: 0 20px; background: var(--code-bg); border-radius: 6px; padding: 14px 18px; font-family: var(--font-mono); font-size: 13px; line-height: 1.8; overflow-x: auto; }
 .quiz-actions { padding: 14px 20px 16px; }
 .btn-reveal {
   display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px;
@@ -451,7 +451,9 @@ body.light .cheat-section { background: #f8f9fa; }
   <div class="quiz-section">
     <div class="quiz-card" data-quiz="1">
       <div class="quiz-header"><span class="quiz-num">1</span><span class="quiz-title">await asyncio.sleep(3) は何を意味しているか</span></div>
-      <div class="quiz-code">async def check_inventory(item_id):\n    await asyncio.sleep(3)\n    return {"item_id": item_id, "stock": 10}</div>
+      <div class="quiz-code">async def check_inventory(item_id):
+    await asyncio.sleep(3)
+    return {"item_id": item_id, "stock": 10}</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="1">解答を見る</button></div>
       <div class="quiz-answer" data-answer="1"><div class="quiz-answer-inner">「ここで3秒間待つ」という意味です。ただし、await があるので待っている間に他の処理（別のチェック等）を進めることができます。sleepが終わったら次の return 文が実行され、<span class="term">results<span class="term-popup">結果（英: results、複数形）</span></span>が返ります。</div></div>
     </div>
@@ -462,7 +464,9 @@ body.light .cheat-section { background: #f8f9fa; }
     </div>
     <div class="quiz-card" data-quiz="3">
       <div class="quiz-header"><span class="quiz-num">3</span><span class="quiz-title">async と await の役割を説明してください</span></div>
-      <div class="quiz-code">async def notify(user_id, <span class="term">message<span class="term-popup">メッセージ（英: message）</span></span>):\n    await send_push_notification(user_id, message)\n    print("通知完了")</div>
+      <div class="quiz-code">async def notify(user_id, <span class="term">message<span class="term-popup">メッセージ（英: message）</span></span>):
+    await send_push_notification(user_id, message)
+    print("通知完了")</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="3">解答を見る</button></div>
       <div class="quiz-answer" data-answer="3"><div class="quiz-answer-inner"><span class="term">非同期<span class="term-popup">async（エイシンク）。待ち時間のある処理を効率よく行う仕組み</span></span>では、async は「この関数は非同期（待ち時間がある）」と宣言するキーワード。await は「ここで結果を待つ」という合図で、待っている間に他の処理に切り替えられます。</div></div>
     </div>

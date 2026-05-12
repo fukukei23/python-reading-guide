@@ -123,7 +123,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 .quiz-header { display: flex; align-items: center; gap: 10px; padding: 16px 20px 12px; }
 .quiz-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: var(--accent); color: #fff; font-size: 13px; font-weight: 700; border-radius: 50%; }
 .quiz-title { font-size: 15px; font-weight: 600; color: var(--fg-bright); }
-.quiz-code { margin: 0 20px; background: var(--code-bg); border-radius: 6px; padding: 14px 18px; font-family: var(--font-mono); font-size: 13px; line-height: 1.8; overflow-x: auto; }
+.quiz-code { white-space: pre-wrap; margin: 0 20px; background: var(--code-bg); border-radius: 6px; padding: 14px 18px; font-family: var(--font-mono); font-size: 13px; line-height: 1.8; overflow-x: auto; }
 .quiz-actions { padding: 14px 20px 16px; }
 .btn-reveal {
   display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px;
@@ -475,13 +475,15 @@ body.light .cheat-section { background: #f8f9fa; }
   <div class="quiz-section">
     <div class="quiz-card" data-quiz="1">
       <div class="quiz-header"><span class="quiz-num">1</span><span class="quiz-title">次のコードで「こんにちは」は何回表示される？</span></div>
-      <div class="quiz-code">for i in range(3):\n    print("こんにちは")</div>
+      <div class="quiz-code">for i in range(3):
+    print("こんにちは")</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="1">解答を見る</button></div>
       <div class="quiz-answer" data-answer="1"><div class="quiz-answer-inner">3回表示されます。range(3) は 0, 1, 2 と3回ループするので、「こんにちは」が3回表示されます。</div></div>
     </div>
     <div class="quiz-card" data-quiz="2">
       <div class="quiz-header"><span class="quiz-num">2</span><span class="quiz-title">次のコードはエラーになる。なぜ？</span></div>
-      <div class="quiz-code">if True:\nprint("エラー")</div>
+      <div class="quiz-code">if True:
+print("エラー")</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="2">解答を見る</button></div>
       <div class="quiz-answer" data-answer="2"><div class="quiz-answer-inner"><span class="term">インデント<span class="term-popup">インデント — 行の先頭空白でブロックを表す</span></span>がないからです。コロン : の次の行は必ず<span class="term">インデント<span class="term-popup">インデント — 行の先頭空白でブロックを表す</span></span>（4スペース）が必要です。</div></div>
     </div>

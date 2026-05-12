@@ -123,7 +123,7 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 .quiz-header { display: flex; align-items: center; gap: 10px; padding: 16px 20px 12px; }
 .quiz-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: var(--accent); color: #fff; font-size: 13px; font-weight: 700; border-radius: 50%; }
 .quiz-title { font-size: 15px; font-weight: 600; color: var(--fg-bright); }
-.quiz-code { margin: 0 20px; background: var(--code-bg); border-radius: 6px; padding: 14px 18px; font-family: var(--font-mono); font-size: 13px; line-height: 1.8; overflow-x: auto; }
+.quiz-code { white-space: pre-wrap; margin: 0 20px; background: var(--code-bg); border-radius: 6px; padding: 14px 18px; font-family: var(--font-mono); font-size: 13px; line-height: 1.8; overflow-x: auto; }
 .quiz-actions { padding: 14px 20px 16px; }
 .btn-reveal {
   display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px;
@@ -474,19 +474,27 @@ while count < 5:
   <div class="quiz-section">
     <div class="quiz-card" data-quiz="1">
       <div class="quiz-header"><span class="quiz-num">1</span><span class="quiz-title">このコードは何を表示しますか？</span></div>
-      <div class="quiz-code">names = ["犬", "猫", "鳥"]\nfor name in names:\n    print("これは" + name + "です")</div>
+      <div class="quiz-code">names = ["犬", "猫", "鳥"]
+for name in names:
+    print("これは" + name + "です")</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="1">解答を見る</button></div>
       <div class="quiz-answer" data-answer="1"><div class="quiz-answer-inner">「これは犬です」「これは猫です」「これは鳥です」の3行が順に表示されます。<span class="term">リスト<span class="term-popup">リスト — 順序付きコレクション</span></span>の要素を1つずつ取り出して処理します。</div></div>
     </div>
     <div class="quiz-card" data-quiz="2">
       <div class="quiz-header"><span class="quiz-num">2</span><span class="quiz-title">このコードは何を表示しますか？</span></div>
-      <div class="quiz-code">for i in range(5):\n    if i == 3:\n        break\n    print(i)</div>
+      <div class="quiz-code">for i in range(5):
+    if i == 3:
+        break
+    print(i)</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="2">解答を見る</button></div>
       <div class="quiz-answer" data-answer="2"><div class="quiz-answer-inner">0, 1, 2 が表示されます。i が 3 のとき break でループが終了するため、3 は表示されません。</div></div>
     </div>
     <div class="quiz-card" data-quiz="3">
       <div class="quiz-header"><span class="quiz-num">3</span><span class="quiz-title">このwhileループは何回 "hello" を表示しますか？</span></div>
-      <div class="quiz-code">n = 0\nwhile n < 4:\n    print("hello")\n    n = n + 1</div>
+      <div class="quiz-code">n = 0
+while n < 4:
+    print("hello")
+    n = n + 1</div>
       <div class="quiz-actions"><button class="btn-reveal" data-target="3">解答を見る</button></div>
       <div class="quiz-answer" data-answer="3"><div class="quiz-answer-inner">4回表示されます。n が 0, 1, 2, 3 のとき（4回）条件 n < 4 を満たし、n が 4 になったとき条件が False になって終了します。</div></div>
     </div>
