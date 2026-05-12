@@ -153,39 +153,36 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 }
 .term:hover { color: var(--fg-bright); }
 .term-popup {
-  display: none;
-  position: absolute;
-  bottom: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
-  background: #1a1a2e;
-  border: 1px solid var(--accent);
-  border-radius: 8px;
-  padding: 10px 14px;
+  display: inline;
+  font-size: 12px;
+  color: var(--fg-dim);
+  background: rgba(124,58,237,0.12);
+  border-radius: 4px;
+  padding: 1px 6px;
+  margin-left: 2px;
+  vertical-align: baseline;
+  line-height: 1.4;
+}
+/* popup arrow removed - inline display */
+/* term-popup is now always visible */
+/* quiz answer term-popup — enhanced visibility */
+.quiz-answer-inner .term-popup {
+  background: rgba(167,139,250,0.28);
+  color: #e0d4ff;
+  font-weight: 600;
   font-size: 13px;
-  line-height: 1.6;
-  color: var(--fg);
-  white-space: nowrap;
-  z-index: 100;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
-  pointer-events: none;
+  padding: 2px 8px;
 }
-.term-popup::after {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 6px solid transparent;
-  border-top-color: var(--accent);
+body.light .quiz-answer-inner .term-popup {
+  background: rgba(109,40,217,0.18);
+  color: #4c1d95;
 }
-.term:hover .term-popup,
-.term.active .term-popup { display: block; }
+
 @media (max-width: 600px) {
   .container { padding: 16px 14px 48px; }
   h1 { font-size: 22px; } h1 span { font-size: 15px; }
   .line-content { font-size: 12px; } .line-num { width: 36px; }
-  .term-popup { white-space: normal; min-width: 180px; left: 0; transform: none; }
+  /* mobile term-popup override removed */
 }
 
 /* === A1: Line comments === */
@@ -294,12 +291,96 @@ body.light {
   --fg: #2d2d3f; --fg-dim: #6b7280; --fg-bright: #1a1a2e;
   --border: #e5e7eb; --warning: #d97706; --success: #059669;
 }
-body.light .term-popup { background: #fff; box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+body.light .term-popup { background: rgba(124,58,237,0.08); }
 body.light .watch-panel { background: #f1f3f5; }
 body.light .sidebar { background: #fff; border-right-color: #e5e7eb; }
 body.light .concept-card { background: #fff; }
 body.light .quiz-card { background: #fff; }
 body.light .comparison-card { background: #f1f3f5; }
+
+/* === 1.2: Common mistakes card === */
+.mistakes-card {
+  background: rgba(251,191,36,0.08);
+  border: 1px solid rgba(251,191,36,0.3);
+  border-left: 4px solid var(--warning);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 24px;
+}
+.mistakes-label {
+  font-size: 12px; font-weight: 700; color: var(--warning);
+  margin-bottom: 10px; letter-spacing: 0.06em;
+}
+.mistake-item {
+  font-size: 14px; line-height: 1.7; margin-bottom: 8px;
+  padding-left: 16px; position: relative;
+}
+.mistake-item:last-child { margin-bottom: 0; }
+.mistake-item::before {
+  content: '\26A0'; position: absolute; left: 0; top: 0;
+  color: var(--warning); font-size: 12px;
+}
+.mistake-title { font-weight: 600; color: var(--warning); }
+.mistake-desc { color: var(--fg-dim); }
+
+/* === 3.3: Font size controls === */
+.font-controls {
+  display: flex; gap: 4px; align-items: center;
+}
+.font-btn {
+  width: 28px; height: 28px; border: 1px solid var(--border);
+  border-radius: 4px; background: rgba(255,255,255,0.06);
+  color: var(--fg-dim); font-size: 14px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all var(--transition);
+}
+.font-btn:hover { background: rgba(255,255,255,0.12); color: var(--fg); }
+.font-btn.active { background: var(--accent-dim); color: var(--accent); border-color: var(--accent); }
+body.font-sm .concept-card p, body.font-sm .key-point p, body.font-sm .quiz-title,
+body.font-sm .mistake-item, body.font-sm .cheat-item { font-size: 13px; }
+body.font-sm .code-line .line-content { font-size: 12px; }
+body.font-lg .concept-card p, body.font-lg .key-point p, body.font-lg .quiz-title,
+body.font-lg .mistake-item, body.font-lg .cheat-item { font-size: 17px; }
+body.font-lg .code-line .line-content { font-size: 16px; }
+
+/* === 4.1: Cheat sheet section === */
+.cheat-section {
+  background: var(--bg-raised); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 20px 24px;
+  margin-bottom: 24px;
+}
+.cheat-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 12px;
+}
+.cheat-label { font-size: 12px; font-weight: 700; color: var(--success); letter-spacing: 0.06em; }
+.cheat-print-btn {
+  font-size: 12px; padding: 4px 12px; border-radius: 4px;
+  border: 1px solid var(--border); background: rgba(255,255,255,0.06);
+  color: var(--fg-dim); cursor: pointer; transition: all var(--transition);
+}
+.cheat-print-btn:hover { background: rgba(255,255,255,0.12); color: var(--fg); }
+.cheat-concept { font-size: 15px; font-weight: 600; color: var(--fg-bright); margin-bottom: 8px; }
+.cheat-list { list-style: none; padding: 0; }
+.cheat-item {
+  font-size: 14px; line-height: 1.8; padding: 4px 0 4px 20px;
+  position: relative; color: var(--fg);
+}
+.cheat-item::before {
+  content: '\2713'; position: absolute; left: 0; color: var(--success);
+  font-size: 12px;
+}
+@media print {
+  body > *:not(.container) { display: none !important; }
+  .container > *:not(.cheat-section) { display: none !important; }
+  .cheat-section { border: 2px solid #333; background: #fff; color: #222; }
+  .cheat-print-btn { display: none; }
+  .cheat-item { color: #222; }
+  .cheat-item::before { color: #16a34a; }
+}
+body.light .mistakes-card { background: rgba(251,191,36,0.06); }
+body.light .cheat-section { background: #f8f9fa; }
+
 </style>
 </head>
 <body>
@@ -308,7 +389,7 @@ body.light .comparison-card { background: #f1f3f5; }
   <header>
     <div class="header-top">
 	    <a href="../../index.html" style="font-size:13px;color:var(--fg-dim);text-decoration:none;display:flex;align-items:center;gap:4px;">&larr; トップ</a>
-	    <div class="header-controls"><button class="btn-hamburger" type="button" aria-label="メニュー"><span></span><span></span><span></span></button><button class="theme-toggle" type="button" aria-label="テーマ切替"></button></div> <span class="header-step">10 / 20</span>
+	    <div class="header-controls"><button class="btn-hamburger" type="button" aria-label="メニュー"><span></span><span></span><span></span></button><button class="theme-toggle" type="button" aria-label="テーマ切替"></button> <div class="font-controls"><button class="font-btn" type="button" data-size="sm" aria-label="小さい文字">A</button><button class="font-btn active" type="button" data-size="md" aria-label="標準文字">A</button><button class="font-btn" type="button" data-size="lg" aria-label="大きい文字">A</button></div></div> <span class="header-step">10 / 20</span>
 	  </div>
     <div class="progress-track"><div class="progress-fill"></div></div>
     <h1>10. インポート<span>(import)</span></h1>
@@ -319,6 +400,12 @@ body.light .comparison-card { background: #f1f3f5; }
     <p><span class="term">インポート<span class="term-popup">インポート — 外部を読み込む</span></span>は「他人が作った便利な道具箱を読み込む」仕組みです。ゼロから作らなくても、用意された道具を使えます。</p>
   </div>
     <div class="usage-badge"><span class="badge-icon">📍</span> 使い道: datetimeモジュールをインポートして日付計算</div>
+
+<div class="mistakes-card">
+  <div class="mistakes-label">COMMON MISTAKES — よくある間違い</div>
+<div class="mistake-item"><span class="mistake-title">モジュール名を間違える</span> — <span class="mistake-desc">import randam のようにスペルミスするとエラー。正しくは import random です。</span></div>
+<div class="mistake-item"><span class="mistake-title">from ... import * を使いすぎる</span> — <span class="mistake-desc">便利ですが、どの関数がどのモジュールから来たか分からなくなります。必要なものだけ import しましょう。</span></div>
+</div>
 
 <section style="margin-bottom:40px;">
     <div class="section-title"><span class="icon">&#9654;</span> コードを1行ずつ実行してみよう</div>
@@ -397,7 +484,21 @@ print(result)</div>
     </div>
   </div>
 
-  <div class="nav-footer">
+  <div class="cheat-section">
+  <div class="cheat-header">
+    <div class="cheat-label">CHEAT SHEET — まとめ</div>
+    <button class="cheat-print-btn" type="button">PDFとして印刷</button>
+  </div>
+  <div class="cheat-concept">インポート</div>
+  <ul class="cheat-list">
+<li class="cheat-item">import module — モジュール全体</li>
+<li class="cheat-item">from module import func — 関数だけ</li>
+<li class="cheat-item">import module as m — 別名</li>
+<li class="cheat-item">__name__ == "__main__" — 直接実行時のみ</li>
+  </ul>
+</div>
+
+<div class="nav-footer">
     <a class="nav-link nav-prev" href="09_boolean_none.html">&larr; 前: 真偽値とNone</a>
     <a class="nav-link nav-next" href="11_classes.html">次: クラス &rarr;</a>
   </div>
@@ -541,21 +642,7 @@ for (var b = 0; b < revealButtons.length; b++) {
   });
 }
 
-// Term tooltip toggle for mobile
-var terms = document.querySelectorAll('.term');
-for (var t = 0; t < terms.length; t++) {
-  terms[t].addEventListener('click', function(e) {
-    e.stopPropagation();
-    var wasActive = this.classList.contains('active');
-    var allTerms = document.querySelectorAll('.term.active');
-    for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
-    if (!wasActive) this.classList.add('active');
-  });
-}
-document.addEventListener('click', function() {
-  var allTerms = document.querySelectorAll('.term.active');
-  for (var a = 0; a < allTerms.length; a++) allTerms[a].classList.remove('active');
-});
+// Term tooltips are now always visible (inline)
 
 
 
@@ -666,6 +753,31 @@ for (var h = 0; h < helpBtns.length; h++) {
     }
   }, {passive: true});
 })();
+
+// === 3.3: Font size toggle ===
+(function() {
+  var saved = localStorage.getItem('prg-font-size') || 'md';
+  if (saved !== 'md') document.body.classList.add('font-' + saved);
+  document.addEventListener('click', function(e) {
+    if (!e.target.classList.contains('font-btn')) return;
+    var size = e.target.getAttribute('data-size');
+    document.body.classList.remove('font-sm', 'font-lg');
+    if (size !== 'md') document.body.classList.add('font-' + size);
+    localStorage.setItem('prg-font-size', size);
+    var btns = document.querySelectorAll('.font-btn');
+    for (var i = 0; i < btns.length; i++) btns[i].classList.toggle('active', btns[i].getAttribute('data-size') === size);
+  });
+  // Set initial active
+  var btns = document.querySelectorAll('.font-btn');
+  for (var i = 0; i < btns.length; i++) btns[i].classList.toggle('active', btns[i].getAttribute('data-size') === saved);
+})();
+
+// === 4.1: Print cheat sheet ===
+document.addEventListener('click', function(e) {
+  if (!e.target.classList.contains('cheat-print-btn')) return;
+  window.print();
+});
+
 </script>
 </body>
 </html>
