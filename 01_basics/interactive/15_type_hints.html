@@ -148,36 +148,44 @@ h1 span { color: var(--fg-dim); font-weight: 400; font-size: 18px; margin-left: 
 .term { border-bottom: 1px dashed var(--accent); cursor: help; position: relative; color: #c4b5fd; }
 .term:hover { color: var(--fg-bright); }
 .term-popup {
-  display: inline;
-  font-size: 12px;
-  color: var(--fg-dim);
-  background: rgba(124,58,237,0.12);
-  border-radius: 4px;
-  padding: 1px 6px;
-  margin-left: 2px;
-  vertical-align: baseline;
-  line-height: 1.4;
-}
-/* popup arrow removed - inline display */
-/* term-popup is now always visible */
-/* quiz answer term-popup — enhanced visibility */
-.quiz-answer-inner .term-popup {
-  background: rgba(167,139,250,0.28);
-  color: #e0d4ff;
-  font-weight: 600;
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-raised);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 8px 14px;
   font-size: 13px;
-  padding: 2px 8px;
+  color: var(--fg);
+  line-height: 1.6;
+  white-space: nowrap;
+  z-index: 100;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(124,58,237,0.3);
+  pointer-events: none;
 }
-body.light .quiz-answer-inner .term-popup {
-  background: rgba(109,40,217,0.18);
-  color: #4c1d95;
+.term-popup::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--accent);
 }
+.term:hover .term-popup,
+.term:focus .term-popup,
+.term.show-popup .term-popup {
+  display: block;
+}
+
 
 @media (max-width: 600px) {
   .container { padding: 16px 14px 48px; }
   h1 { font-size: 22px; } h1 span { font-size: 15px; }
   .line-content { font-size: 12px; } .line-num { width: 36px; }
-  /* mobile term-popup override removed */
+  .term-popup { white-space: normal; min-width: 200px; max-width: 280px; font-size: 12px; }
 }
 
 /* === A1: Line comments === */
@@ -286,7 +294,38 @@ body.light {
   --fg: #2d2d3f; --fg-dim: #6b7280; --fg-bright: #1a1a2e;
   --border: #e5e7eb; --warning: #d97706; --success: #059669;
 }
-body.light .term-popup { background: rgba(124,58,237,0.08); }
+body.light .term-popup {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-raised);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  color: var(--fg);
+  line-height: 1.6;
+  white-space: nowrap;
+  z-index: 100;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(124,58,237,0.3);
+  pointer-events: none;
+}
+.term-popup::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--accent);
+}
+.term:hover .term-popup,
+.term:focus .term-popup,
+.term.show-popup .term-popup {
+  display: block;
+}
 body.light .watch-panel { background: #f1f3f5; }
 body.light .sidebar { background: #fff; border-right-color: #e5e7eb; }
 body.light .concept-card { background: #fff; }
@@ -764,5 +803,18 @@ document.addEventListener('click', function(e) {
 });
 
 </script>
+
+// term popup click toggle (mobile support)
+document.querySelectorAll('.term').forEach(function(t){
+  t.setAttribute('tabindex','0');
+  t.setAttribute('role','button');
+  t.addEventListener('click', function(e){
+    e.stopPropagation();
+    document.querySelectorAll('.term.show-popup').forEach(function(o){ if(o!==t) o.classList.remove('show-popup'); });
+    t.classList.toggle('show-popup');
+  });
+});
+document.addEventListener('click', function(){ document.querySelectorAll('.term.show-popup').forEach(function(t){ t.classList.remove('show-popup'); }); });
+
 </body>
 </html>
