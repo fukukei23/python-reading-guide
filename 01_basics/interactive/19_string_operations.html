@@ -375,6 +375,24 @@ body.font-lg .code-line .line-content { font-size: 16px; }
   color: var(--fg-dim); cursor: pointer; transition: all var(--transition);
 }
 .cheat-print-btn:hover { background: rgba(255,255,255,0.12); color: var(--fg); }
+.cheat-tldr {
+  margin: 0 0 14px; padding: 12px 14px;
+  background: rgba(124,58,237,0.08);
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+  font-size: 14px; line-height: 1.9; color: var(--fg);
+}
+.cheat-tldr .tldr-label {
+  display: block; font-size: 12px; font-weight: 700;
+  color: var(--accent); letter-spacing: 0.06em; margin-bottom: 6px;
+}
+.cheat-tldr ul { list-style: none; padding: 0; margin: 0; }
+.cheat-tldr li { padding: 2px 0 2px 18px; position: relative; }
+.cheat-tldr li::before {
+  content: '\2192'; position: absolute; left: 0;
+  color: var(--accent); font-size: 12px;
+}
+
 .cheat-concept { font-size: 15px; font-weight: 600; color: var(--fg-bright); margin-bottom: 8px; }
 .cheat-list { list-style: none; padding: 0; }
 .cheat-item {
@@ -395,6 +413,7 @@ body.font-lg .code-line .line-content { font-size: 16px; }
 }
 body.light .mistakes-card { background: rgba(251,191,36,0.06); }
 body.light .cheat-section { background: #f8f9fa; }
+body.light .cheat-tldr { background: rgba(124,58,237,0.05); }
 
 </style>
 </head>
@@ -501,6 +520,14 @@ print(fruits[1])</div>
   <div class="cheat-header">
     <div class="cheat-label">CHEAT SHEET — まとめ</div>
     <button class="cheat-print-btn" type="button">PDFとして印刷</button>
+  </div>
+  <div class="cheat-tldr">
+    <span class="tldr-label">3行で分かる</span>
+    <ul>
+      <li>文字列を組み立て・分割・整形する方法</li>
+      <li>split で分割・join で結合・strip で空白除去</li>
+      <li>メッセージ作成やCSV解析で頻出する作業</li>
+    </ul>
   </div>
   <div class="cheat-concept">文字列操作</div>
   <ul class="cheat-list">
